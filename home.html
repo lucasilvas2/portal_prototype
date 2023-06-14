@@ -19,6 +19,14 @@
     />
 
     <link rel="stylesheet" href="assets/css/shared/iconly.css" />
+    <style>
+      .carousel-item > img {
+        height: 450px;
+      }
+      .carousel-caption {
+        background-color: rgba(0, 0, 0, 0.397);
+      }
+    </style>
   </head>
 
   <body>
@@ -110,7 +118,7 @@
                 </a>
               </li>
 
-              <li class="sidebar-item" id="videos-sidebar-btn">
+              <li class="sidebar-item">
                 <a href="videos.html" class="sidebar-link">
                   <i class="bi bi-camera-reels-fill"></i>
                   <span>Vídeos</span>
@@ -273,170 +281,226 @@
           </nav>
         </header>
         <div id="main-content">
+          <div class="row justify-content-center">
+            <div class="card w-75">
+              <div class="card-body">
+                <div
+                  id="carouselExampleCaptions"
+                  class="carousel slide"
+                  data-bs-ride="carousel"
+                >
+                  <ol class="carousel-indicators">
+                    <li
+                      data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide-to="0"
+                      class="active"
+                    ></li>
+                    <li
+                      data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide-to="1"
+                    ></li>
+                    <li
+                      data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide-to="2"
+                    ></li>
+                    <li
+                      data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide-to="3"
+                    ></li>
+                    <li
+                      data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide-to="4"
+                    ></li>
+                  </ol>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img
+                        src="assets/images/project/online-education-3412473_1920.jpg"
+                        class="d-block w-100"
+                        alt="..."
+                      />
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Slide 1</h5>
+                        <p>
+                          Nulla vitae elit libero, a pharetra augue mollis
+                          interdum.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        src="assets/images/project/education-5578742_1920.png"
+                        class="d-block w-100"
+                        alt="..."
+                      />
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Slide 2</h5>
+                        <p>
+                          Nulla vitae elit libero, a pharetra augue mollis
+                          interdum.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        src="assets/images/project/education-5600987_1280.png"
+                        class="d-block w-100"
+                        alt="..."
+                      />
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Slide 3</h5>
+                        <p>
+                          Nulla vitae elit libero, a pharetra augue mollis
+                          interdum.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        src="assets/images/project/stay-home-5205390_1920.png"
+                        class="d-block w-100"
+                        alt="..."
+                      />
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Slide 4</h5>
+                        <p>
+                          Nulla vitae elit libero, a pharetra augue mollis
+                          interdum.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        src="assets/images/project/laptop-5568038_1920.png"
+                        class="d-block w-100"
+                        alt="..."
+                      />
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Slide 5</h5>
+                        <p>
+                          Nulla vitae elit libero, a pharetra augue mollis
+                          interdum.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <a
+                    class="carousel-control-prev"
+                    href="#carouselExampleCaptions"
+                    role="button"
+                    data-bs-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Previous</span>
+                  </a>
+                  <a
+                    class="carousel-control-next"
+                    href="#carouselExampleCaptions"
+                    role="button"
+                    data-bs-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Next</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="page-heading">
             <div class="page-title">
               <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                  <h3>Vídeos</h3>
+                  <h3>Comunicados</h3>
                   <p class="text-subtitle text-muted">
-                    Todos os conteúdos disponiveis.
+                    Informações e avisos da instituição.
                   </p>
                 </div>
-                <div class="col-12 col-md-6 order-md-2 order-first">
+                <!-- <div class="col-12 col-md-6 order-md-2 order-first">
                   <nav
                     aria-label="breadcrumb"
                     class="breadcrumb-header float-start float-lg-end"
                   >
                     <ol class="breadcrumb">
                       <li class="breadcrumb-item">
-                        <a href="home.html">Home</a>
+                        <a href="/pages/index.html">Home</a>
                       </li>
                       <li class="breadcrumb-item active" aria-current="page">
-                        Vídeos
+                        Home
                       </li>
                     </ol>
                   </nav>
-                </div>
+                </div> -->
               </div>
             </div>
-          </div>
-          <div class="d-sm-flex mx-2 mb-4">
-            <button class="btn btn-secondary w-auto">Todos</button>
-            <button class="btn btn-secondary w-auto ms-2">Matemática</button>
-            <button class="btn btn-secondary w-auto ms-2">Português</button>
-            <button class="btn btn-secondary w-auto ms-2">Ciências</button>
-            <button class="btn btn-secondary w-auto ms-2">Curiosidades</button>
-            <button class="btn btn-secondary w-auto ms-2">Cultura Maker</button>
-          </div>
-          <div class="row">
-            <div class="col-xl-4 col-md-6 col-sm-12">
+            <section class="section">
               <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <h4 class="card-title mb-0">Video Card</h4>
-                  </div>
-                  <div
-                    class="embed-responsive embed-responsive-item embed-responsive-16by9 w-100"
-                  >
-                    <iframe
-                      src="https://www.youtube.com/embed/dbPOAH7U6gk?list=PLlWL3aOWFGDj0YSvgfx_M9Iemb4n9igMo"
-                      title="FMC2, 2023-03-08: Intro, prés, e meta"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      style="width: 100%"
-                      height="300"
-                      allowfullscreen
-                    ></iframe>
-                  </div>
-                  <div class="card-body">
-                    <p class="card-text">
-                      Candy cupcake sugar plum oat cake wafer marzipan jujubes.
-                      Jelly-o sesame snaps cheesecake topping. Cupcake fruitcake
-                      macaroon donut pastry gummies tiramisu chocolate bar
-                      muffin.
-                    </p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                  </div>
+                <div class="card-header">
+                  <h4 class="card-title">Example Content</h4>
+                </div>
+                <div class="card-body">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Consectetur quas omnis laudantium tempore exercitationem,
+                    expedita aspernatur sed officia asperiores unde tempora
+                    maxime odio reprehenderit distinctio incidunt! Vel
+                    aspernatur dicta consequatur!
+                  </p>
                 </div>
               </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
+            </section>
+            <section class="section">
               <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <h4 class="card-title mb-0">Video Card</h4>
-                  </div>
-                  <div
-                    class="embed-responsive embed-responsive-item embed-responsive-16by9 w-100"
-                  >
-                    <iframe
-                      src="https://www.youtube.com/embed/dbPOAH7U6gk?list=PLlWL3aOWFGDj0YSvgfx_M9Iemb4n9igMo"
-                      title="FMC2, 2023-03-08: Intro, prés, e meta"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      style="width: 100%"
-                      height="300"
-                      allowfullscreen
-                    ></iframe>
-                  </div>
-                  <div class="card-body">
-                    <p class="card-text">
-                      Candy cupcake sugar plum oat cake wafer marzipan jujubes.
-                      Jelly-o sesame snaps cheesecake topping. Cupcake fruitcake
-                      macaroon donut pastry gummies tiramisu chocolate bar
-                      muffin.
-                    </p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                  </div>
+                <div class="card-header">
+                  <h4 class="card-title">Example Content</h4>
+                </div>
+                <div class="card-body">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Quos fugiat incidunt dolore dolores atque quidem magnam
+                    voluptatum minima sunt! Alias iste porro asperiores nisi
+                    excepturi autem adipisci optio quos quas. Lorem ipsum dolor
+                    sit amet consectetur adipisicing elit. Corporis, esse.
+                    Fugiat doloremque quibusdam consequatur, magni error, odio
+                    consequuntur placeat atque vero neque molestiae sint totam
+                    architecto ea, itaque labore maiores?
+                  </p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Quia minima officiis odit iste. Sint tempore inventore harum
+                    iure, ducimus repudiandae vero atque dolores deleniti enim,
+                    asperiores repellendus labore quam dignissimos?
+                  </p>
                 </div>
               </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
+            </section>
+
+            <section class="section">
               <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <h4 class="card-title mb-0">Video Card</h4>
-                  </div>
-                  <div
-                    class="embed-responsive embed-responsive-item embed-responsive-16by9 w-100"
-                  >
-                    <iframe
-                      src="https://www.youtube.com/embed/dbPOAH7U6gk?list=PLlWL3aOWFGDj0YSvgfx_M9Iemb4n9igMo"
-                      title="FMC2, 2023-03-08: Intro, prés, e meta"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      style="width: 100%"
-                      height="300"
-                      allowfullscreen
-                    ></iframe>
-                  </div>
-                  <div class="card-body">
-                    <p class="card-text">
-                      Candy cupcake sugar plum oat cake wafer marzipan jujubes.
-                      Jelly-o sesame snaps cheesecake topping. Cupcake fruitcake
-                      macaroon donut pastry gummies tiramisu chocolate bar
-                      muffin.
-                    </p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                  </div>
+                <div class="card-header">
+                  <h4 class="card-title">Example Content</h4>
+                </div>
+                <div class="card-body">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Quos fugiat incidunt dolore dolores atque quidem magnam
+                    voluptatum minima sunt! Alias iste porro asperiores nisi
+                    excepturi autem adipisci optio quos quas.
+                  </p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Quia minima officiis odit iste. Sint tempore inventore harum
+                    iure, ducimus repudiandae vero atque dolores deleniti enim,
+                    asperiores repellendus labore quam dignissimos?
+                  </p>
                 </div>
               </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <h4 class="card-title mb-0">Video Card</h4>
-                  </div>
-                  <div
-                    class="embed-responsive embed-responsive-item embed-responsive-16by9 w-100"
-                  >
-                    <iframe
-                      src="https://www.youtube.com/embed/dbPOAH7U6gk?list=PLlWL3aOWFGDj0YSvgfx_M9Iemb4n9igMo"
-                      title="FMC2, 2023-03-08: Intro, prés, e meta"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      style="width: 100%"
-                      height="300"
-                      allowfullscreen
-                    ></iframe>
-                  </div>
-                  <div class="card-body">
-                    <p class="card-text">
-                      Candy cupcake sugar plum oat cake wafer marzipan jujubes.
-                      Jelly-o sesame snaps cheesecake topping. Cupcake fruitcake
-                      macaroon donut pastry gummies tiramisu chocolate bar
-                      muffin.
-                    </p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </section>
           </div>
 
           <footer>
@@ -462,7 +526,6 @@
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/app.js"></script>
     <script src="assets/js/project.js"></script>
-
     <!-- Need: Apexcharts -->
     <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
     <script src="assets/js/pages/dashboard.js"></script>

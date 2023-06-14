@@ -33,7 +33,7 @@
               Insira seus dados para se cadastrar em nosso portal.
             </p>
 
-            <form action="index.html">
+            <form action="#">
               <div class="form-group position-relative has-icon-left mb-4">
                 <input
                   type="text"
@@ -94,16 +94,17 @@
                   <i class="bi bi-shield-lock"></i>
                 </div>
               </div>
-              <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">
+              <button
+                id="btn-register"
+                class="btn btn-primary btn-block btn-lg shadow-lg mt-5"
+              >
                 Registrar
               </button>
             </form>
             <div class="text-center mt-5 text-lg fs-4">
               <p class="text-gray-600">
                 Já tem uma conta?
-                <a href="/pages/auth/auth-login.html" class="font-bold"
-                  >Log in</a
-                >.
+                <a href="index.html" class="font-bold">Log in</a>.
               </p>
             </div>
           </div>
@@ -115,3 +116,13 @@
     </div>
   </body>
 </html>
+<script src="assets/extensions/jquery/jquery.min.js"></script>
+<script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
+<script>
+  $("#btn-register").click(function (event) {
+    event.preventDefault();
+    console.log(event);
+    window.localStorage.setItem("register", true);
+    window.location.replace("index.html");
+  });
+</script>
