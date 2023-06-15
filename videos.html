@@ -467,3 +467,32 @@
     <script src="assets/js/pages/dashboard.js"></script>
   </body>
 </html>
+
+<script src="assets/extensions/jquery/jquery.min.js"></script>
+<script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
+<script>
+  $(document).ready(function () {
+    let create_content = window.localStorage.getItem("create_content");
+
+    if (create_content === "true") {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "Conteúdo adicionado para avaliação!",
+      });
+
+      window.localStorage.setItem("create_content", false);
+    }
+  });
+</script>

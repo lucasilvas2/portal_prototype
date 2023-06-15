@@ -19,6 +19,10 @@
     />
 
     <link rel="stylesheet" href="assets/css/shared/iconly.css" />
+    <link
+      rel="stylesheet"
+      href="assets/extensions/choices.js/public/assets/styles/choices.css"
+    />
   </head>
 
   <body>
@@ -126,13 +130,13 @@
 
               <li class="sidebar-title">Administração</li>
               <li class="sidebar-item">
-                <a href="studen" class="sidebar-link">
+                <a href="students.html" class="sidebar-link">
                   <i class="bi bi-person-fill"></i>
                   <span>Alunos</span>
                 </a>
               </li>
               <li class="sidebar-item">
-                <a href="/pages/index.html" class="sidebar-link">
+                <a href="validate_content.html" class="sidebar-link">
                   <i class="bi bi-check-all"></i>
                   <span>Validar Conteúdo</span>
                 </a>
@@ -324,13 +328,13 @@
                         </div>
                         <div class="col-md-6 col-12">
                           <div class="form-group">
-                            <label for="last-name-column">Categorias</label>
+                            <label for="first-name-column">Categorias</label>
                             <input
-                              type="text"
-                              id="last-name-column"
                               class="form-control"
+                              id="tags"
+                              type="text"
+                              value=""
                               placeholder="Categorias"
-                              name="lname-column"
                             />
                           </div>
                         </div>
@@ -374,7 +378,7 @@
 
                         <div class="col-12 d-flex justify-content-end">
                           <button
-                            id="add-student"
+                            id="btn-create"
                             type="submit"
                             class="btn btn-primary me-1 mb-1"
                           >
@@ -398,7 +402,7 @@
           <footer>
             <div class="footer clearfix mb-0 text-muted">
               <div class="float-start">
-                <p>2022 &copy; Portal</p>
+                <p>2023 &copy; Portal</p>
               </div>
               <div class="float-end">
                 <p>
@@ -406,7 +410,7 @@
                   <span class="text-danger"
                     ><i class="bi bi-heart-fill icon-mid"></i
                   ></span>
-                  por <a href="https://ahmadsaugi.com">Saugi</a>
+                  por <a href="#"></a>
                 </p>
               </div>
             </div>
@@ -418,7 +422,29 @@
     <script src="assets/js/app.js"></script>
 
     <!-- Need: Apexcharts -->
-    <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
+    <!-- <script src="assets/extensions/apexcharts/apexcharts.min.js"></script> -->
     <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/extensions/jquery/jquery.min.js"></script>
+    <script src="assets/extensions/choices.js/public/assets/scripts/choices.js"></script>
+    <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
+    <script>
+      $("#btn-create").click(function (event) {
+        event.preventDefault();
+        console.log(event);
+        window.localStorage.setItem("create_content", true);
+        window.location.replace("videos.html");
+      });
+
+      $(document).ready(function () {
+        let element = document.getElementById("tags");
+        let select_tags = new Choices(element, {
+          allowHTML: true,
+          delimiter: ",",
+          editItems: true,
+          removeItemButton: true,
+        });
+      });
+    </script>
   </body>
 </html>
