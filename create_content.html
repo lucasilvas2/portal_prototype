@@ -319,10 +319,10 @@
                             <label for="first-name-column">Título</label>
                             <input
                               type="text"
-                              id="first-name-column"
+                              id="title"
                               class="form-control"
                               placeholder="Título"
-                              name="fname-column"
+                              name="title"
                             />
                           </div>
                         </div>
@@ -335,6 +335,7 @@
                               type="text"
                               value=""
                               placeholder="Categorias"
+                              name="tags"
                             />
                           </div>
                         </div>
@@ -343,36 +344,80 @@
                             <label for="cpf">Descrição</label>
                             <input
                               type="text"
-                              id="cpf"
+                              id="description"
                               class="form-control"
                               placeholder="Descrição"
-                              name="cpf"
+                              name="description"
                             />
                           </div>
                         </div>
-                        <div class="col-md-6 col-12">
-                          <div class="form-group">
-                            <label for="registration">Arquivo</label>
-                            <input
-                              type="file"
-                              id="registration"
-                              class="form-control"
-                              name="registration"
-                              placeholder="Arquivo .mp4, .mkv"
-                              accept=""
-                            />
+                        <div class="row">
+                          <div class="form-group w-auto">
+                            <label for="select_type">Tipo do conteúdo:</label>
+                            <select class="form-select" id="select_type">
+                              <option value="0" disabled selected>
+                                Selecione o tipo do conteúdo
+                              </option>
+                              <option value="text">Texto</option>
+                              <option value="video">Vídeo</option>
+                            </select>
                           </div>
                         </div>
-                        <div class="col-md-6 col-12">
-                          <div class="form-group">
-                            <label for="school">Link You Tube</label>
-                            <input
-                              type="text"
-                              id="school"
-                              class="form-control"
-                              name="school"
-                              placeholder="Link You Tube"
-                            />
+                        <div id="partials-video" class="row d-none">
+                          <div class="col-md-6 col-12">
+                            <div class="form-group">
+                              <label for="registration">Arquivo</label>
+                              <input
+                                type="file"
+                                id="file_video"
+                                class="form-control"
+                                name="file_video"
+                                placeholder="Arquivo .mp4, .mkv"
+                                accept=".mp4, .mpa"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-12">
+                            <div class="form-group">
+                              <label for="school">Link You Tube</label>
+                              <input
+                                type="text"
+                                id="link_youtube"
+                                class="form-control"
+                                name="link_youtube"
+                                placeholder="Link You Tube"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- TEXTO -->
+                        <div id="partials-text" class="row d-none">
+                          <div class="col-md-6 col-12">
+                            <div class="form-group">
+                              <label for="registration">Arquivo</label>
+                              <input
+                                type="file"
+                                id="file_text"
+                                class="form-control"
+                                name="file_text"
+                                placeholder="Arquivo .pdf"
+                                accept=".pdf"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="card-header">
+                              <h4 class="card-title">Crie seu texto</h4>
+                            </div>
+                            <div class="card-body">
+                              <textarea
+                                name="text_edit"
+                                id="text_edit"
+                                cols="30"
+                                rows="10"
+                              ></textarea>
+                            </div>
                           </div>
                         </div>
 
@@ -425,6 +470,8 @@
     <!-- <script src="assets/extensions/apexcharts/apexcharts.min.js"></script> -->
     <script src="assets/js/pages/dashboard.js"></script>
 
+    <script src="assets/extensions/tinymce/tinymce.min.js"></script>
+    <script src="assets/static/js/pages/tinymce.js"></script>
     <script src="assets/extensions/jquery/jquery.min.js"></script>
     <script src="assets/extensions/choices.js/public/assets/scripts/choices.js"></script>
     <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
@@ -444,7 +491,61 @@
           editItems: true,
           removeItemButton: true,
         });
+
+        initTiny("text_edit");
       });
+
+      $("#select_type").change(function (event) {
+        let type = event.target.value;
+        let text = $("#partials-text");
+        let video = $("#partials-video");
+        switch (type) {
+          case "text":
+            text.removeClass("d-none");
+            video.addClass("d-none");
+            break;
+          case "video":
+            text.addClass("d-none");
+            video.removeClass("d-none");
+            break;
+          default:
+            break;
+        }
+      });
+      function initTiny(element_textarea) {
+        tinymce.init({
+          selector: `#${element_textarea}`,
+          plugins: [
+            "a11ychecker",
+            "advlist",
+            "advcode",
+            "advtable",
+            "autolink",
+            "checklist",
+            "export",
+            "lists",
+            "link",
+            "image",
+            "charmap",
+            "preview",
+            "anchor",
+            "searchreplace",
+            "visualblocks",
+            "powerpaste",
+            "fullscreen",
+            "formatpainter",
+            "insertdatetime",
+            "media",
+            "table",
+            "help",
+            "wordcount",
+          ],
+          toolbar:
+            "undo redo | formatpainter casechange blocks | bold italic backcolor | " +
+            "alignleft aligncenter alignright alignjustify | " +
+            "bullist numlist checklist outdent indent | removeformat | a11ycheck code table help",
+        });
+      }
     </script>
   </body>
 </html>
