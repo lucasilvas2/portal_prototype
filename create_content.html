@@ -360,6 +360,7 @@
                               </option>
                               <option value="text">Texto</option>
                               <option value="video">Vídeo</option>
+                              <option value="image">Imagem</option>
                             </select>
                           </div>
                         </div>
@@ -393,19 +394,6 @@
 
                         <!-- TEXTO -->
                         <div id="partials-text" class="row d-none">
-                          <div class="col-md-6 col-12">
-                            <div class="form-group">
-                              <label for="registration">Arquivo</label>
-                              <input
-                                type="file"
-                                id="file_text"
-                                class="form-control"
-                                name="file_text"
-                                placeholder="Arquivo .pdf"
-                                accept=".pdf"
-                              />
-                            </div>
-                          </div>
                           <div class="col-12">
                             <div class="card-header">
                               <h4 class="card-title">Crie seu texto</h4>
@@ -417,6 +405,23 @@
                                 cols="30"
                                 rows="10"
                               ></textarea>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- IMAGEM  -->
+                        <div id="partials-image" class="row d-none">
+                          <div class="col-md-6 col-12">
+                            <div class="form-group">
+                              <label for="registration">Arquivo</label>
+                              <input
+                                type="file"
+                                id="file_text"
+                                class="form-control"
+                                name="file_text"
+                                placeholder="Arquivo .jpg, , .png"
+                                accept=".jpeg, .png"
+                              />
                             </div>
                           </div>
                         </div>
@@ -499,14 +504,22 @@
         let type = event.target.value;
         let text = $("#partials-text");
         let video = $("#partials-video");
+        let image = $("#partials-image");
         switch (type) {
           case "text":
             text.removeClass("d-none");
             video.addClass("d-none");
+            image.addClass("d-none");
             break;
           case "video":
             text.addClass("d-none");
             video.removeClass("d-none");
+            image.addClass("d-none");
+            break;
+          case "image":
+            text.addClass("d-none");
+            video.addClass("d-none");
+            image.removeClass("d-none");
             break;
           default:
             break;
