@@ -314,7 +314,7 @@
                   <div class="row justify-content-between">
                     <h4 class="card-title w-auto">Comunicados cadastrados</h4>
                     <div class="w-auto">
-                      <a href="create_notices.html" class="btn btn-primary"
+                      <a href="create_notice.html" class="btn btn-primary"
                         ><i class="bi bi-plus"></i> Adicionar Comunicado</a
                       >
                     </div>
@@ -333,6 +333,7 @@
                         <tr>
                           <th>Título</th>
                           <th>Criado por</th>
+                          <th>Status</th>
                           <th>Data</th>
                           <th></th>
                         </tr>
@@ -341,6 +342,7 @@
                         <tr>
                           <td>Example Content</td>
                           <td class="text-bold-500">Michael Right</td>
+                          <td><span class="badge bg-success">Ativo</span></td>
                           <td>05/03/2013</td>
                           <td>
                             <div class="d-flex">
@@ -403,9 +405,9 @@
     <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
     <script>
       $(document).ready(function () {
-        let added_student = window.localStorage.getItem("added_student");
+        let create_notice = window.localStorage.getItem("create_notice");
 
-        if (added_student === "true") {
+        if (create_notice === "true") {
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -420,13 +422,12 @@
 
           Toast.fire({
             icon: "success",
-            title: "Aluno adicionado com sucesso!",
+            title: "Comunicado criado com sucesso!",
           });
 
-          window.localStorage.setItem("added_student", false);
+          window.localStorage.setItem("create_notice", false);
         }
       });
     </script>
-    F
   </body>
 </html>
