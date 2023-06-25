@@ -134,25 +134,27 @@
                 </a>
               </li>
 
-              <li class="sidebar-title">Administração</li>
-              <li class="sidebar-item">
-                <a href="students.html" class="sidebar-link">
-                  <i class="bi bi-person-fill"></i>
-                  <span>Alunos</span>
-                </a>
-              </li>
-              <li class="sidebar-item">
-                <a href="validation_content.html" class="sidebar-link">
-                  <i class="bi bi-check-all"></i>
-                  <span>Validar Conteúdo</span>
-                </a>
-              </li>
-              <li class="sidebar-item">
-                <a href="notices.html" class="sidebar-link">
-                  <i class="bi bi-card-text"></i>
-                  <span>Comunicados</span>
-                </a>
-              </li>
+              <div id="menu-admin" class="d-none">
+                <li class="sidebar-title">Administração</li>
+                <li class="sidebar-item">
+                  <a href="students.html" class="sidebar-link">
+                    <i class="bi bi-person-fill"></i>
+                    <span>Alunos</span>
+                  </a>
+                </li>
+                <li class="sidebar-item">
+                  <a href="#" class="sidebar-link">
+                    <i class="bi bi-check-all"></i>
+                    <span>Validar Conteúdo</span>
+                  </a>
+                </li>
+                <li class="sidebar-item">
+                  <a href="notices.html" class="sidebar-link">
+                    <i class="bi bi-card-text"></i>
+                    <span>Comunicados</span>
+                  </a>
+                </li>
+              </div>
             </ul>
           </div>
         </div>
@@ -243,12 +245,19 @@
                   <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="user-menu d-flex">
                       <div class="user-name text-end me-3">
-                        <h6 class="mb-0 text-gray-600">John Ducky</h6>
-                        <p class="mb-0 text-sm text-gray-600">Professor</p>
+                        <h6 class="mb-0 text-gray-600" id="profile-name">
+                          John Ducky
+                        </h6>
+                        <p class="mb-0 text-sm text-gray-600" id="profile-type">
+                          Professor
+                        </p>
                       </div>
                       <div class="user-img d-flex align-items-center">
                         <div class="avatar avatar-md">
-                          <img src="assets/images/faces/1.jpg" />
+                          <img
+                            src="assets/images/faces/1.jpg"
+                            id="profile-avatar"
+                          />
                         </div>
                       </div>
                     </div>
@@ -259,7 +268,9 @@
                     style="min-width: 11rem"
                   >
                     <li>
-                      <h6 class="dropdown-header">Oi, John!</h6>
+                      <h6 class="dropdown-header" id="profile-salutation">
+                        Oi, John!
+                      </h6>
                     </li>
                     <li>
                       <a class="dropdown-item" href="#"
@@ -490,6 +501,7 @@
     <script src="assets/extensions/tinymce/tinymce.min.js"></script>
     <script src="assets/static/js/pages/tinymce.js"></script>
     <script src="assets/extensions/jquery/jquery.min.js"></script>
+    <script src="assets/js/project.js"></script>
     <script src="assets/extensions/choices.js/public/assets/scripts/choices.js"></script>
     <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
     <script>
