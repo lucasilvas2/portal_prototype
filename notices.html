@@ -431,13 +431,7 @@
     <script src="assets/js/project.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-
-    <!-- <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"
-      integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
     <script>
       $(document).ready(function () {
         let create_notice = window.localStorage.getItem("create_notice");
@@ -467,31 +461,15 @@
       });
 
       function getNotices() {
-        // fetch("https://faceduc.azurewebsites.net/comunicados")
-        //   .then(function (response) {
-        //     if (response.ok) {
-        //       // Lógica de sucesso
-        //       console.log("Requisição GET bem-sucedida!");
-
-        //       return response.json();
-        //     } else {
-        //       // Lógica de erro
-        //       console.error("Erro na requisição GET:", response.statusText);
-        //     }
-        //   })
-        //   .then(function (data) {})
-        //   .catch(function (error) {
-        //     // Lógica de erro
-        //     console.error("Erro na requisição GET:", error);
-        //   });
-
         $("#table_notices").DataTable({
           ajax: {
             url: "https://faceduc.azurewebsites.net/comunicados",
             dataSrc: function (response) {
-              console.log(response);
               return response;
             },
+          },
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json",
           },
           columns: [
             { data: "id" },
@@ -503,7 +481,12 @@
                 return '<span class="badge bg-success">Ativo</span>';
               },
             },
-            { data: "data" },
+            {
+              data: "data",
+              render: function name(data) {
+                return moment(data).format("D/MM/Y");
+              },
+            },
             {
               data: null,
             },

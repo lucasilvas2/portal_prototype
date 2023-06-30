@@ -343,7 +343,7 @@
                 </div>
                 <div class="card-content">
                   <div class="card-body">
-                    <form class="form">
+                    <form class="form" id="form_notice">
                       <div class="row">
                         <div class="col-12">
                           <div class="form-group">
@@ -432,25 +432,22 @@
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/app.js"></script>
 
-    <!-- Need: Apexcharts -->
-    <!-- <script src="assets/extensions/apexcharts/apexcharts.min.js"></script> -->
-    <script src="assets/js/pages/dashboard.js"></script>
-
     <script src="assets/extensions/tinymce/tinymce.min.js"></script>
     <script src="assets/static/js/pages/tinymce.js"></script>
     <script src="assets/extensions/jquery/jquery.min.js"></script>
-    <script src="assets/js/project.js"></script>
+
     <script src="assets/extensions/choices.js/public/assets/scripts/choices.js"></script>
     <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
     <script src="assets/extensions/flatpickr/flatpickr.min.js"></script>
     <script src="assets/static/js/pages/date-picker.js"></script>
+    <script src="assets/js/project.js"></script>
     <script>
-      $("#btn-create").click(function (event) {
-        event.preventDefault();
-        console.log(event);
-        window.localStorage.setItem("create_notice", true);
-        window.location.replace("notices.html");
-      });
+      // $("#btn-create").click(function (event) {
+      //   event.preventDefault();
+      //   console.log(event);
+      //   window.localStorage.setItem("create_notice", true);
+      //   window.location.replace("notices.html");
+      // });
 
       $(document).ready(function () {
         initTiny("text_edit");
@@ -459,13 +456,13 @@
         tinymce.init({
           selector: `#${element_textarea}`,
           plugins: [
-            "a11ychecker",
+            // "a11ychecker",
             "advlist",
-            "advcode",
-            "advtable",
+            // "advcode",
+            // "advtable",
             "autolink",
-            "checklist",
-            "export",
+            // "checklist",
+            // "export",
             "lists",
             "link",
             "image",
@@ -474,10 +471,10 @@
             "anchor",
             "searchreplace",
             "visualblocks",
-            "powerpaste",
+            // "powerpaste",
             "fullscreen",
-            "formatpainter",
-            "insertdatetime",
+            // "formatpainter",
+            // "insertdatetime",
             "media",
             "table",
             "help",
@@ -543,6 +540,48 @@
         },
         dateFormat: "d/m/Y", // Formato de data para o Brasil
         placeholder: "Escolha um período",
+      });
+
+      $("#form_notice").submit(function (event) {
+        event.preventDefault();
+        data_form = {
+          titulo: $("#title").val(),
+          conteudo: tinyMCE.get("text_edit").getContent(),
+        };
+        console.log(data_form);
+        var options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data_form),
+        };
+
+        // Enviando os dados via Fetch API
+        fetch("https://faceduc.azurewebsites.net/comunicado", options)
+          .then(function (response) {
+            if (response.ok) {
+              // Lógica de sucesso
+              console.log("Dados enviados com sucesso!");
+              window.localStorage.setItem("create_notice", true);
+              window.location.replace("notices.html");
+            } else {
+              // Lógica de erro
+              console.error("Erro ao enviar os dados:", response.statusText);
+              Toast.fire({
+                icon: "error",
+                title: "Error ao cadastrar o comunicado!",
+              });
+            }
+          })
+          .catch(function (error) {
+            // Lógica de erro
+            console.error("Erro ao enviar os dados:", error);
+            Toast.fire({
+              icon: "error",
+              title: `Error ao cadastrar o comunicado! <br> ${error}`,
+            });
+          });
       });
     </script>
   </body>
