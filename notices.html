@@ -433,8 +433,10 @@
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
     <script>
+      const table = null;
       $(document).ready(function () {
         let create_notice = window.localStorage.getItem("create_notice");
+        let update_notice = window.localStorage.getItem("update_notice");
 
         if (create_notice === "true") {
           const Toast = Swal.mixin({
@@ -457,10 +459,31 @@
           window.localStorage.setItem("create_notice", false);
         }
 
-        getNotices();
+        if (update_notice === "true") {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "success",
+            title: "Comunicado editado com sucesso!",
+          });
+
+          window.localStorage.setItem("update_notice", false);
+        }
+
+        getNoticesTable();
       });
 
-      function getNotices() {
+      function getNoticesTable() {
         $("#table_notices").DataTable({
           ajax: {
             url: "https://faceduc.azurewebsites.net/comunicados",
@@ -488,7 +511,7 @@
               },
             },
             {
-              data: null,
+              data: "null",
             },
           ],
           columnDefs: [
@@ -497,12 +520,61 @@
               data: null,
               defaultContent: `
               <div class="d-flex">
-                <a href="#" class="btn btn-success"><i class="bi bi-pen"></i> Editar</a>
-                <a href="#" class="btn btn-danger ms-2"><i class="bi bi-trash"></i> Excluir</a>
+                <button class="btn btn-success edit"><i class="bi bi-pen"></i> Editar</button>
+                <button class="btn btn-danger ms-2 delete"><i class="bi bi-trash"></i> Excluir</button>
               </div>`,
             },
           ],
+          drawCallback: function (settings) {
+            initEventDelete();
+          },
         });
+      }
+
+      function initEventDelete() {
+        $(".delete").click(function (event) {
+          let id = event.currentTarget.closest("tr").children[0].innerHTML;
+          deleteNotice(id);
+        });
+
+        $(".edit").click(function (event) {
+          let id = event.currentTarget.closest("tr").children[0].innerHTML;
+          window.localStorage.setItem("id_notice", id);
+          window.location.replace("create_notice.html");
+        });
+      }
+
+      function deleteNotice(id) {
+        fetch(`https://faceduc.azurewebsites.net/comunicado/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            // Outros cabeçalhos, se necessário
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              // A requisição foi bem-sucedida
+              console.log("Exclusão realizada com sucesso!");
+              Toast.fire({
+                icon: "success",
+                title: "Comunicado excluído com sucesso!",
+              });
+              $("#table_notices").DataTable().clear().draw();
+              $("#table_notices").DataTable().destroy();
+              getNoticesTable();
+            } else {
+              // A requisição falhou
+              console.error("Falha ao excluir.");
+              Toast.fire({
+                icon: "error",
+                title: "Error ao excluir comunicado!",
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Ocorreu um erro:", error);
+          });
       }
     </script>
   </body>

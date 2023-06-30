@@ -309,8 +309,8 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                  <h3>Criando Comunicado</h3>
-                  <p class="text-subtitle text-muted">
+                  <h3 id="page_title">Criando Comunicado</h3>
+                  <p id="page_subtitle" class="text-subtitle text-muted">
                     Adicione o seu comunicado.
                   </p>
                 </div>
@@ -326,7 +326,11 @@
                       <li class="breadcrumb-item">
                         <a href="notices.html">Comunicados</a>
                       </li>
-                      <li class="breadcrumb-item active" aria-current="page">
+                      <li
+                        id="page_bread"
+                        class="breadcrumb-item active"
+                        aria-current="page"
+                      >
                         Criar Comunicado
                       </li>
                     </ol>
@@ -452,17 +456,77 @@
       $(document).ready(function () {
         initTiny("text_edit");
       });
+      function isEdit() {
+        let id_notice = window.localStorage.getItem("id_notice");
+        if (id_notice != null) {
+          console.log(id_notice);
+          getNotice(id_notice);
+          changeTextPageEdit(id_notice);
+        }
+      }
+
+      function changeTextPageEdit(id) {
+        $("#page_title")[0].innerText = `Editando Comunicado #${id}`;
+        $("#page_bread")[0].innerText = `Edite o comunicado`;
+        $("#page_subtitle")[0].innerText = `Editar Comunicado`;
+        $("#btn-create")[0].innerText = `Atualizar`;
+        // changeNamePath();
+      }
+
+      function changeNamePath() {
+        var history = window.history;
+
+        // Obtém a URL atual
+        var currentURL = window.location.href;
+
+        // Obtém apenas o caminho da URL atual
+        var currentPath = window.location.pathname;
+
+        // Novo texto para o caminho
+        var newPath = "/edit_notice.html";
+
+        // Substitui apenas o texto do caminho na URL atual
+        var newURL = currentURL.replace(currentPath, newPath);
+
+        // Atualiza a URL sem recarregar a página
+        history.pushState(null, null, newURL);
+      }
+
+      function getNotice(id) {
+        fetch(`https://faceduc.azurewebsites.net/comunicado/${id}`)
+          .then(function (response) {
+            if (response.ok) {
+              // Lógica de sucesso
+              console.log("Requisição GET bem-sucedida!");
+
+              return response.json();
+            } else {
+              // Lógica de erro
+              console.error("Erro na requisição GET:", response.statusText);
+            }
+          })
+          .then(function (data) {
+            console.log(data);
+            setValueEdit(data);
+          })
+          .catch(function (error) {
+            // Lógica de erro
+            console.error("Erro na requisição GET:", error);
+          });
+      }
+
+      function setValueEdit(notice) {
+        $("#title").val(notice.titulo);
+        tinyMCE.get("text_edit").setContent(`${notice.conteudo}`);
+        $("#validate").val(notice.data);
+      }
+
       function initTiny(element_textarea) {
         tinymce.init({
           selector: `#${element_textarea}`,
           plugins: [
-            // "a11ychecker",
             "advlist",
-            // "advcode",
-            // "advtable",
             "autolink",
-            // "checklist",
-            // "export",
             "lists",
             "link",
             "image",
@@ -471,10 +535,7 @@
             "anchor",
             "searchreplace",
             "visualblocks",
-            // "powerpaste",
             "fullscreen",
-            // "formatpainter",
-            // "insertdatetime",
             "media",
             "table",
             "help",
@@ -484,71 +545,16 @@
             "undo redo | formatpainter casechange blocks | bold italic backcolor | " +
             "alignleft aligncenter alignright alignjustify | " +
             "bullist numlist checklist outdent indent | removeformat | a11ycheck code table help",
+          setup: function (editor) {
+            editor.on("init", function () {
+              // Função chamada após a inicialização do TinyMCE ser concluída
+              isEdit();
+            });
+          },
         });
       }
 
-      flatpickr("#validate", {
-        mode: "range",
-        minDate: "today",
-        maxDate: new Date().fp_incr(30),
-        locale: {
-          firstDayOfWeek: 0,
-          weekdays: {
-            shorthand: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
-            longhand: [
-              "Domingo",
-              "Segunda",
-              "Terça",
-              "Quarta",
-              "Quinta",
-              "Sexta",
-              "Sábado",
-            ],
-          },
-          months: {
-            shorthand: [
-              "Jan",
-              "Fev",
-              "Mar",
-              "Abr",
-              "Mai",
-              "Jun",
-              "Jul",
-              "Ago",
-              "Set",
-              "Out",
-              "Nov",
-              "Dez",
-            ],
-            longhand: [
-              "Janeiro",
-              "Fevereiro",
-              "Março",
-              "Abril",
-              "Maio",
-              "Junho",
-              "Julho",
-              "Agosto",
-              "Setembro",
-              "Outubro",
-              "Novembro",
-              "Dezembro",
-            ],
-          },
-          rangeSeparator: " até ",
-          weekAbbreviation: "Sem",
-        },
-        dateFormat: "d/m/Y", // Formato de data para o Brasil
-        placeholder: "Escolha um período",
-      });
-
-      $("#form_notice").submit(function (event) {
-        event.preventDefault();
-        data_form = {
-          titulo: $("#title").val(),
-          conteudo: tinyMCE.get("text_edit").getContent(),
-        };
-        console.log(data_form);
+      function createNotice(data_form) {
         var options = {
           method: "POST",
           headers: {
@@ -582,6 +588,59 @@
               title: `Error ao cadastrar o comunicado! <br> ${error}`,
             });
           });
+      }
+
+      function updateNotice(data_form, id) {
+        var options = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data_form),
+        };
+
+        // Enviando os dados via Fetch API
+        fetch(`https://faceduc.azurewebsites.net/comunicado/${id}`, options)
+          .then(function (response) {
+            if (response.ok) {
+              // Lógica de sucesso
+              console.log("Dados enviados com sucesso!");
+              window.localStorage.setItem("update_notice", true);
+              window.location.replace("notices.html");
+              window.localStorage.removeItem("id_notice");
+            } else {
+              // Lógica de erro
+              console.error("Erro ao enviar os dados:", response.statusText);
+              Toast.fire({
+                icon: "error",
+                title: "Error ao atualizar o comunicado!",
+              });
+            }
+          })
+          .catch(function (error) {
+            // Lógica de erro
+            console.error("Erro ao enviar os dados:", error);
+            Toast.fire({
+              icon: "error",
+              title: `Error ao cadastrar o comunicado! <br> ${error}`,
+            });
+          });
+      }
+
+      $("#form_notice").submit(function (event) {
+        event.preventDefault();
+        data_form = {
+          titulo: $("#title").val(),
+          conteudo: tinyMCE.get("text_edit").getContent(),
+          usuarioId: 1,
+          data: $("#validate").val(),
+        };
+        let id_notice = window.localStorage.getItem("id_notice");
+        if (id_notice != null) {
+          updateNotice(data_form, id_notice);
+        } else {
+          createNotice(data_form);
+        }
       });
     </script>
   </body>

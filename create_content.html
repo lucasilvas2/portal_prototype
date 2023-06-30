@@ -501,9 +501,10 @@
     <script src="assets/extensions/tinymce/tinymce.min.js"></script>
     <script src="assets/static/js/pages/tinymce.js"></script>
     <script src="assets/extensions/jquery/jquery.min.js"></script>
-    <script src="assets/js/project.js"></script>
+
     <script src="assets/extensions/choices.js/public/assets/scripts/choices.js"></script>
     <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
+    <script src="assets/js/project.js"></script>
     <script>
       $("#btn-create").click(function (event) {
         event.preventDefault();
@@ -553,13 +554,8 @@
         tinymce.init({
           selector: `#${element_textarea}`,
           plugins: [
-            "a11ychecker",
             "advlist",
-            "advcode",
-            "advtable",
             "autolink",
-            "checklist",
-            "export",
             "lists",
             "link",
             "image",
@@ -568,10 +564,7 @@
             "anchor",
             "searchreplace",
             "visualblocks",
-            "powerpaste",
             "fullscreen",
-            "formatpainter",
-            "insertdatetime",
             "media",
             "table",
             "help",

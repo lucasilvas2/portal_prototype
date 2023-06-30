@@ -25,4 +25,9 @@ $(document).ready(function () {
         break;
     }
   }
+  console.log(window.location.pathname);
+
+  if (window.location.pathname != "/create_notice.html") {
+    window.localStorage.removeItem("id_notice");
+  }
 });
