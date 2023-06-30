@@ -474,69 +474,7 @@
                 </div> -->
               </div>
             </div>
-            <section class="section">
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="card-title">Example Content</h4>
-                </div>
-                <div class="card-body">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur quas omnis laudantium tempore exercitationem,
-                    expedita aspernatur sed officia asperiores unde tempora
-                    maxime odio reprehenderit distinctio incidunt! Vel
-                    aspernatur dicta consequatur!
-                  </p>
-                </div>
-              </div>
-            </section>
-            <section class="section">
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="card-title">Example Content</h4>
-                </div>
-                <div class="card-body">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Quos fugiat incidunt dolore dolores atque quidem magnam
-                    voluptatum minima sunt! Alias iste porro asperiores nisi
-                    excepturi autem adipisci optio quos quas. Lorem ipsum dolor
-                    sit amet consectetur adipisicing elit. Corporis, esse.
-                    Fugiat doloremque quibusdam consequatur, magni error, odio
-                    consequuntur placeat atque vero neque molestiae sint totam
-                    architecto ea, itaque labore maiores?
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quia minima officiis odit iste. Sint tempore inventore harum
-                    iure, ducimus repudiandae vero atque dolores deleniti enim,
-                    asperiores repellendus labore quam dignissimos?
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            <section class="section">
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="card-title">Example Content</h4>
-                </div>
-                <div class="card-body">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Quos fugiat incidunt dolore dolores atque quidem magnam
-                    voluptatum minima sunt! Alias iste porro asperiores nisi
-                    excepturi autem adipisci optio quos quas.
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quia minima officiis odit iste. Sint tempore inventore harum
-                    iure, ducimus repudiandae vero atque dolores deleniti enim,
-                    asperiores repellendus labore quam dignissimos?
-                  </p>
-                </div>
-              </div>
-            </section>
+            <div id="div_notices"></div>
           </div>
 
           <footer>
@@ -559,11 +497,69 @@
       </div>
     </div>
     <script src="assets/extensions/jquery/jquery.min.js"></script>
-    <script src="assets/js/project.js"></script>
+
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/app.js"></script>
-    <!-- Need: Apexcharts -->
-    <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
-    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
+    <script src="assets/js/project.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        getNotices();
+      });
+
+      function getNotices() {
+        fetch("https://faceduc.azurewebsites.net/comunicados")
+          .then(function (response) {
+            if (response.ok) {
+              // Lógica de sucesso
+              console.log("Requisição GET bem-sucedida!");
+
+              return response.json();
+            } else {
+              // Lógica de erro
+              console.error("Erro na requisição GET:", response.statusText);
+            }
+          })
+          .then(function (data) {
+            addnotices(data);
+          })
+          .catch(function (error) {
+            // Lógica de erro
+            console.error("Erro na requisição GET:", error);
+          });
+      }
+
+      function addnotices(notices) {
+        let div_notices = $("#div_notices");
+        if (notices.length > 0) {
+          $.each(notices, function (notice) {
+            card(this, div_notices);
+          });
+        }
+      }
+
+      function card(notice, div) {
+        console.log(notice);
+        let card = document.createElement("div");
+        card.classList.add("card");
+        card.id = `card_${notice.id}`;
+
+        card.innerHTML = `
+          <div class="card-header">
+            <h4 class="card-title">${notice.titulo}</h4>
+          </div>
+          <div class="card-body">
+            <p>${notice.conteudo}</p>
+            <div class="row justify-content-end">
+              <span class="text-muted w-auto small">
+                <i class="bi bi-clock"></i>
+                ${moment(notice.data).format("D/MM/Y")}</span>
+            </div>
+          </div>`;
+        div.append(card);
+      }
+    </script>
   </body>
 </html>

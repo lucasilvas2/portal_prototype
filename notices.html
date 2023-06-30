@@ -19,6 +19,18 @@
     />
 
     <link rel="stylesheet" href="assets/css/shared/iconly.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"
+    />
+
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap.min.css"
+      integrity="sha512-BMbq2It2D3J17/C7aRklzOODG1IQ3+MHw3ifzBHMBwGO/0yUqYmsStgBjI0z5EYlaDEFnvYV7gNYdD3vFLRKsA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    /> -->
   </head>
 
   <body>
@@ -344,10 +356,11 @@
                     </p>
                   </div>
                   <!-- table striped -->
-                  <div class="table-responsive">
-                    <table class="table table-striped mb-0">
+                  <div class="table-responsive p-4">
+                    <table id="table_notices" class="table table-striped mb-0">
                       <thead>
                         <tr>
+                          <th>Id</th>
                           <th>Título</th>
                           <th>Criado por</th>
                           <th>Status</th>
@@ -356,7 +369,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                        <!-- <tr>
                           <td>Example Content</td>
                           <td class="text-bold-500">Michael Right</td>
                           <td><span class="badge bg-success">Ativo</span></td>
@@ -383,7 +396,7 @@
                               ></a>
                             </div>
                           </td>
-                        </tr>
+                        </tr> -->
                       </tbody>
                     </table>
                   </div>
@@ -413,14 +426,18 @@
     </div>
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/app.js"></script>
-
-    <!-- Need: Apexcharts -->
-    <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
-    <script src="assets/js/pages/dashboard.js"></script>
-
+    <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
     <script src="assets/extensions/jquery/jquery.min.js"></script>
     <script src="assets/js/project.js"></script>
-    <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"
+      integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script> -->
     <script>
       $(document).ready(function () {
         let create_notice = window.localStorage.getItem("create_notice");
@@ -445,7 +462,65 @@
 
           window.localStorage.setItem("create_notice", false);
         }
+
+        getNotices();
       });
+
+      function getNotices() {
+        // fetch("https://faceduc.azurewebsites.net/comunicados")
+        //   .then(function (response) {
+        //     if (response.ok) {
+        //       // Lógica de sucesso
+        //       console.log("Requisição GET bem-sucedida!");
+
+        //       return response.json();
+        //     } else {
+        //       // Lógica de erro
+        //       console.error("Erro na requisição GET:", response.statusText);
+        //     }
+        //   })
+        //   .then(function (data) {})
+        //   .catch(function (error) {
+        //     // Lógica de erro
+        //     console.error("Erro na requisição GET:", error);
+        //   });
+
+        $("#table_notices").DataTable({
+          ajax: {
+            url: "https://faceduc.azurewebsites.net/comunicados",
+            dataSrc: function (response) {
+              console.log(response);
+              return response;
+            },
+          },
+          columns: [
+            { data: "id" },
+            { data: "titulo" },
+            { data: "usuario.nome" },
+            {
+              data: null,
+              render: function (data, type, row) {
+                return '<span class="badge bg-success">Ativo</span>';
+              },
+            },
+            { data: "data" },
+            {
+              data: null,
+            },
+          ],
+          columnDefs: [
+            {
+              targets: -1,
+              data: null,
+              defaultContent: `
+              <div class="d-flex">
+                <a href="#" class="btn btn-success"><i class="bi bi-pen"></i> Editar</a>
+                <a href="#" class="btn btn-danger ms-2"><i class="bi bi-trash"></i> Excluir</a>
+              </div>`,
+            },
+          ],
+        });
+      }
     </script>
   </body>
 </html>

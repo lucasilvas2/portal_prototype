@@ -24,16 +24,37 @@
         <div class="col-lg-5 col-12">
           <div id="auth-left">
             <div class="auth-logo">
-              <a href="index.html"
-                ><img src="assets/images/project/logo.png" alt="Logo"
-              /></a>
+              <a href="index.html">
+                <div class="d-flex align-items-center">
+                  <img
+                    class="mt-2"
+                    src="assets/images/project/faceduc.png"
+                    alt="Logo"
+                    srcset=""
+                    style="height: 35px; width: 35px"
+                  />
+                  <h4 class="mb-0 mt-2">Faceduc</h4>
+                </div>
+              </a>
             </div>
             <h1 class="auth-title">Registre-se</h1>
             <p class="auth-subtitle mb-5">
               Insira seus dados para se cadastrar em nosso portal.
             </p>
 
-            <form action="#">
+            <form id="form_user">
+              <div class="form-group position-relative has-icon-left mb-4">
+                <input
+                  type="text"
+                  class="form-control form-control-xl"
+                  placeholder="Nome"
+                  name="nome"
+                  id="nome"
+                />
+                <div class="form-control-icon">
+                  <i class="bi bi-person"></i>
+                </div>
+              </div>
               <div class="form-group position-relative has-icon-left mb-4">
                 <input
                   type="text"
@@ -49,6 +70,8 @@
                   type="text"
                   class="form-control form-control-xl"
                   placeholder="Email"
+                  name="email"
+                  id="email"
                 />
                 <div class="form-control-icon">
                   <i class="bi bi-envelope"></i>
@@ -79,6 +102,8 @@
                   type="password"
                   class="form-control form-control-xl"
                   placeholder="Password"
+                  name="senha"
+                  id="senha"
                 />
                 <div class="form-control-icon">
                   <i class="bi bi-shield-lock"></i>
@@ -97,6 +122,7 @@
               <button
                 id="btn-register"
                 class="btn btn-primary btn-block btn-lg shadow-lg mt-5"
+                type="submit"
               >
                 Registrar
               </button>
@@ -116,14 +142,51 @@
     </div>
   </body>
 </html>
+<script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
 <script src="assets/extensions/jquery/jquery.min.js"></script>
 <script src="assets/js/project.js"></script>
-<script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
+
 <script>
-  $("#btn-register").click(function (event) {
+  $("#form_user").submit(function (event) {
     event.preventDefault();
-    console.log(event);
-    window.localStorage.setItem("register", true);
-    window.location.replace("index.html");
+    data_form = {
+      nome: $("#nome").val(),
+      email: $("#email").val(),
+      senha: $("#senha").val(),
+    };
+    console.log(data_form);
+    var options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data_form),
+    };
+
+    // Enviando os dados via Fetch API
+    fetch("https://faceduc.azurewebsites.net/usuario", options)
+      .then(function (response) {
+        if (response.ok) {
+          // Lógica de sucesso
+          console.log("Dados enviados com sucesso!");
+          window.localStorage.setItem("register", true);
+          window.location.replace("index.html");
+        } else {
+          // Lógica de erro
+          console.error("Erro ao enviar os dados:", response.statusText);
+          Toast.fire({
+            icon: "error",
+            title: "Error ao cadastrar usuário!",
+          });
+        }
+      })
+      .catch(function (error) {
+        // Lógica de erro
+        console.error("Erro ao enviar os dados:", error);
+        Toast.fire({
+          icon: "error",
+          title: `Error ao cadastrar usuário! <br> ${error}`,
+        });
+      });
   });
 </script>
