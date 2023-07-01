@@ -132,22 +132,21 @@
 <script src="assets/extensions/jquery/jquery.min.js"></script>
 <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
 <script>
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
   $(document).ready(function () {
     let register = window.localStorage.getItem("register");
 
     if (register === "true") {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
-      });
-
       Toast.fire({
         icon: "success",
         title: "Usuário cadastrado com sucesso!",
@@ -181,11 +180,16 @@
         } else {
           // Lógica de erro
           console.error("Erro na requisição GET:", response.statusText);
+          Toast.fire({
+            icon: "error",
+            title: "Credenciais inválidas!",
+          });
         }
       })
       .then(function (data) {
-        console.log(data);
-        sessionUser(data);
+        if (data != undefined) {
+          sessionUser(data);
+        }
       })
       .catch(function (error) {
         // Lógica de erro
