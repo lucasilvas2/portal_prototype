@@ -395,25 +395,14 @@
 
     <script src="assets/extensions/jquery/jquery.min.js"></script>
     <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
-    <script src="assets/js/project.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="assets/js/project.js"></script>
     <script>
       $(document).ready(function () {
         let added_student = window.localStorage.getItem("added_student");
         let update_student = window.localStorage.getItem("update_student");
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        });
 
         if (added_student === "true") {
           Toast.fire({
@@ -485,6 +474,7 @@
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Sim, excluir!",
+            cancelButtonText: "Cancelar",
           }).then((result) => {
             if (result.isConfirmed) {
               let id = event.currentTarget.closest("tr").children[0].innerHTML;
