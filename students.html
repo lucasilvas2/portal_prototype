@@ -431,10 +431,10 @@
 
           window.localStorage.setItem("update_student", false);
         }
-        getStudents();
+        getStudentsTable();
       });
 
-      function getStudents() {
+      function getStudentsTable() {
         $("#table_students").DataTable({
           ajax: {
             url: "https://faceduc.azurewebsites.net/alunos",
@@ -477,8 +477,20 @@
 
       function initEventDeleteEdit() {
         $(".delete").click(function (event) {
-          let id = event.currentTarget.closest("tr").children[0].innerHTML;
-          deleteNotice(id);
+          Swal.fire({
+            title: "Você tem certeza?",
+            text: "Você não será capaz de reverter!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, excluir!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              let id = event.currentTarget.closest("tr").children[0].innerHTML;
+              deleteStudent(id);
+            }
+          });
         });
 
         $(".edit").click(function (event) {
@@ -486,6 +498,39 @@
           window.localStorage.setItem("id_student", id);
           window.location.replace("edit_student.html");
         });
+      }
+
+      function deleteStudent(id) {
+        fetch(`https://faceduc.azurewebsites.net/aluno/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            // Outros cabeçalhos, se necessário
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              // A requisição foi bem-sucedida
+              console.log("Exclusão realizada com sucesso!");
+              Toast.fire({
+                icon: "success",
+                title: "Comunicado excluído com sucesso!",
+              });
+              $("#table_students").DataTable().clear().draw();
+              $("#table_students").DataTable().destroy();
+              getStudentsTable();
+            } else {
+              // A requisição falhou
+              console.error("Falha ao excluir.");
+              Toast.fire({
+                icon: "error",
+                title: "Error ao excluir comunicado!",
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Ocorreu um erro:", error);
+          });
       }
     </script>
   </body>

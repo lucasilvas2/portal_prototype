@@ -14,6 +14,10 @@ $(document).ready(function () {
   let type = localStorage.getItem("type_perfil");
   let user = JSON.parse(localStorage.getItem("user"));
 
+  if (user == undefined) {
+    window.location.replace("index.html");
+  }
+
   if ($("#menu-admin")[0] != undefined) {
     $("#profile-name")[0].innerHTML = user.nome;
     $("#profile-salutation")[0].innerHTML = `Olá, ${user.nome}!`;
@@ -27,7 +31,6 @@ $(document).ready(function () {
         break;
     }
   }
-  console.log(window.location.pathname);
 
   if (window.location.pathname != "/edit_notice.html") {
     window.localStorage.removeItem("id_notice");

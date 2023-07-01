@@ -474,12 +474,6 @@
             "undo redo | formatpainter casechange blocks | bold italic backcolor | " +
             "alignleft aligncenter alignright alignjustify | " +
             "bullist numlist checklist outdent indent | removeformat | a11ycheck code table help",
-          setup: function (editor) {
-            editor.on("init", function () {
-              // Função chamada após a inicialização do TinyMCE ser concluída
-              isEdit();
-            });
-          },
         });
       }
 
@@ -521,10 +515,11 @@
 
       $("#form_notice").submit(function (event) {
         event.preventDefault();
+        let user = JSON.parse(localStorage.getItem("user"));
         data_form = {
           titulo: $("#title").val(),
           conteudo: tinyMCE.get("text_edit").getContent(),
-          usuarioId: 1,
+          usuarioId: user.id,
           data: $("#validate").val(),
         };
         createNotice(data_form);
