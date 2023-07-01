@@ -402,26 +402,34 @@
     <script>
       $(document).ready(function () {
         let added_student = window.localStorage.getItem("added_student");
+        let update_student = window.localStorage.getItem("update_student");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
 
         if (added_student === "true") {
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
-          });
-
           Toast.fire({
             icon: "success",
             title: "Aluno adicionado com sucesso!",
           });
 
           window.localStorage.setItem("added_student", false);
+        }
+        if (update_student === "true") {
+          Toast.fire({
+            icon: "success",
+            title: "Aluno atualizado com sucesso!",
+          });
+
+          window.localStorage.setItem("update_student", false);
         }
         getStudents();
       });
@@ -456,11 +464,27 @@
               data: null,
               defaultContent: `
               <div class="d-flex">
-                <a href="#" class="btn btn-success"><i class="bi bi-pen"></i> Editar</a>
-                <a href="#" class="btn btn-danger ms-2"><i class="bi bi-trash"></i> Excluir</a>
+                <button class="btn btn-success edit"><i class="bi bi-pen"></i> Editar</button>
+                <button class="btn btn-danger ms-2 delete"><i class="bi bi-trash"></i> Excluir</button>
               </div>`,
             },
           ],
+          drawCallback: function (settings) {
+            initEventDeleteEdit();
+          },
+        });
+      }
+
+      function initEventDeleteEdit() {
+        $(".delete").click(function (event) {
+          let id = event.currentTarget.closest("tr").children[0].innerHTML;
+          deleteNotice(id);
+        });
+
+        $(".edit").click(function (event) {
+          let id = event.currentTarget.closest("tr").children[0].innerHTML;
+          window.localStorage.setItem("id_student", id);
+          window.location.replace("edit_student.html");
         });
       }
     </script>

@@ -56,7 +56,10 @@
                 <input
                   type="text"
                   class="form-control form-control-xl"
-                  placeholder="Email ou CPF"
+                  placeholder="Email"
+                  id="email"
+                  name="email"
+                  required
                 />
                 <div class="form-control-icon">
                   <i class="bi bi-person"></i>
@@ -65,8 +68,11 @@
               <div class="form-group position-relative has-icon-left mb-4">
                 <input
                   type="password"
+                  name="password"
+                  id="password"
                   class="form-control form-control-xl"
                   placeholder="Senha"
+                  required
                 />
                 <div class="form-control-icon">
                   <i class="bi bi-shield-lock"></i>
@@ -149,15 +155,51 @@
 
       window.localStorage.setItem("register", false);
     }
+
+    window.localStorage.removeItem("user");
   });
 
   $("#form-login").submit(function (event) {
     event.preventDefault();
+
+    let email = $("#email").val();
+    let password = $("#password").val();
+    getUser(email, password);
+  });
+
+  function getUser(email, password) {
+    var encodedEmail = encodeURIComponent(email);
+    fetch(
+      `https://faceduc.azurewebsites.net/usuario/${encodedEmail}/${password}`
+    )
+      .then(function (response) {
+        if (response.ok) {
+          // Lógica de sucesso
+          console.log("Requisição GET bem-sucedida!");
+
+          return response.json();
+        } else {
+          // Lógica de erro
+          console.error("Erro na requisição GET:", response.statusText);
+        }
+      })
+      .then(function (data) {
+        console.log(data);
+        sessionUser(data);
+      })
+      .catch(function (error) {
+        // Lógica de erro
+        console.error("Erro na requisição GET:", error);
+      });
+  }
+
+  function sessionUser(user) {
     let type = $("#type_user_login").val();
 
     let perfil =
       $("#type_user_login").val() == "student" ? "student" : "teacher";
     window.localStorage.setItem("type_perfil", perfil);
+    window.localStorage.setItem("user", JSON.stringify(user));
     window.location.replace("home.html");
-  });
+  }
 </script>

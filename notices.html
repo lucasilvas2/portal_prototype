@@ -296,7 +296,7 @@
                       <hr class="dropdown-divider" />
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#"
+                      <a class="dropdown-item" href="index.html"
                         ><i class="icon-mid bi bi-box-arrow-left me-2"></i>
                         Logout</a
                       >
@@ -439,19 +439,19 @@
         let create_notice = window.localStorage.getItem("create_notice");
         let update_notice = window.localStorage.getItem("update_notice");
 
-        if (create_notice === "true") {
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
-          });
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
 
+        if (create_notice === "true") {
           Toast.fire({
             icon: "success",
             title: "Comunicado criado com sucesso!",
@@ -461,18 +461,6 @@
         }
 
         if (update_notice === "true") {
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
-          });
-
           Toast.fire({
             icon: "success",
             title: "Comunicado editado com sucesso!",
@@ -527,12 +515,12 @@
             },
           ],
           drawCallback: function (settings) {
-            initEventDelete();
+            initEventDeleteEdit();
           },
         });
       }
 
-      function initEventDelete() {
+      function initEventDeleteEdit() {
         $(".delete").click(function (event) {
           let id = event.currentTarget.closest("tr").children[0].innerHTML;
           deleteNotice(id);
@@ -540,8 +528,9 @@
 
         $(".edit").click(function (event) {
           let id = event.currentTarget.closest("tr").children[0].innerHTML;
+          console.log(id);
           window.localStorage.setItem("id_notice", id);
-          window.location.replace("create_notice.html");
+          window.location.replace("edit_notice.html");
         });
       }
 

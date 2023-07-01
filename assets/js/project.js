@@ -12,13 +12,15 @@ const Toast = Swal.mixin({
 
 $(document).ready(function () {
   let type = localStorage.getItem("type_perfil");
+  let user = JSON.parse(localStorage.getItem("user"));
+
   if ($("#menu-admin")[0] != undefined) {
+    $("#profile-name")[0].innerHTML = user.nome;
+    $("#profile-salutation")[0].innerHTML = `Olá, ${user.nome}!`;
     switch (type) {
       case "student":
-        $("#profile-name")[0].innerHTML = "Maria Silva";
         $("#profile-type")[0].innerHTML = "Estudante";
         $("#profile-avatar")[0].src = "assets/images/faces/3.jpg";
-        $("#profile-salutation")[0].innerHTML = "Olá, Maria!";
         break;
       default:
         $("#menu-admin")[0].classList.remove("d-none");
@@ -27,7 +29,7 @@ $(document).ready(function () {
   }
   console.log(window.location.pathname);
 
-  if (window.location.pathname != "/create_notice.html") {
+  if (window.location.pathname != "/edit_notice.html") {
     window.localStorage.removeItem("id_notice");
   }
 });

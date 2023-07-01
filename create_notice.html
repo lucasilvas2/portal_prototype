@@ -293,7 +293,7 @@
                       <hr class="dropdown-divider" />
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#"
+                      <a class="dropdown-item" href="index.html"
                         ><i class="icon-mid bi bi-box-arrow-left me-2"></i>
                         Logout</a
                       >
@@ -446,80 +446,9 @@
     <script src="assets/static/js/pages/date-picker.js"></script>
     <script src="assets/js/project.js"></script>
     <script>
-      // $("#btn-create").click(function (event) {
-      //   event.preventDefault();
-      //   console.log(event);
-      //   window.localStorage.setItem("create_notice", true);
-      //   window.location.replace("notices.html");
-      // });
-
       $(document).ready(function () {
         initTiny("text_edit");
       });
-      function isEdit() {
-        let id_notice = window.localStorage.getItem("id_notice");
-        if (id_notice != null) {
-          console.log(id_notice);
-          getNotice(id_notice);
-          changeTextPageEdit(id_notice);
-        }
-      }
-
-      function changeTextPageEdit(id) {
-        $("#page_title")[0].innerText = `Editando Comunicado #${id}`;
-        $("#page_bread")[0].innerText = `Edite o comunicado`;
-        $("#page_subtitle")[0].innerText = `Editar Comunicado`;
-        $("#btn-create")[0].innerText = `Atualizar`;
-        // changeNamePath();
-      }
-
-      function changeNamePath() {
-        var history = window.history;
-
-        // Obtém a URL atual
-        var currentURL = window.location.href;
-
-        // Obtém apenas o caminho da URL atual
-        var currentPath = window.location.pathname;
-
-        // Novo texto para o caminho
-        var newPath = "/edit_notice.html";
-
-        // Substitui apenas o texto do caminho na URL atual
-        var newURL = currentURL.replace(currentPath, newPath);
-
-        // Atualiza a URL sem recarregar a página
-        history.pushState(null, null, newURL);
-      }
-
-      function getNotice(id) {
-        fetch(`https://faceduc.azurewebsites.net/comunicado/${id}`)
-          .then(function (response) {
-            if (response.ok) {
-              // Lógica de sucesso
-              console.log("Requisição GET bem-sucedida!");
-
-              return response.json();
-            } else {
-              // Lógica de erro
-              console.error("Erro na requisição GET:", response.statusText);
-            }
-          })
-          .then(function (data) {
-            console.log(data);
-            setValueEdit(data);
-          })
-          .catch(function (error) {
-            // Lógica de erro
-            console.error("Erro na requisição GET:", error);
-          });
-      }
-
-      function setValueEdit(notice) {
-        $("#title").val(notice.titulo);
-        tinyMCE.get("text_edit").setContent(`${notice.conteudo}`);
-        $("#validate").val(notice.data);
-      }
 
       function initTiny(element_textarea) {
         tinymce.init({
@@ -590,43 +519,6 @@
           });
       }
 
-      function updateNotice(data_form, id) {
-        var options = {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data_form),
-        };
-
-        // Enviando os dados via Fetch API
-        fetch(`https://faceduc.azurewebsites.net/comunicado/${id}`, options)
-          .then(function (response) {
-            if (response.ok) {
-              // Lógica de sucesso
-              console.log("Dados enviados com sucesso!");
-              window.localStorage.setItem("update_notice", true);
-              window.location.replace("notices.html");
-              window.localStorage.removeItem("id_notice");
-            } else {
-              // Lógica de erro
-              console.error("Erro ao enviar os dados:", response.statusText);
-              Toast.fire({
-                icon: "error",
-                title: "Error ao atualizar o comunicado!",
-              });
-            }
-          })
-          .catch(function (error) {
-            // Lógica de erro
-            console.error("Erro ao enviar os dados:", error);
-            Toast.fire({
-              icon: "error",
-              title: `Error ao cadastrar o comunicado! <br> ${error}`,
-            });
-          });
-      }
-
       $("#form_notice").submit(function (event) {
         event.preventDefault();
         data_form = {
@@ -635,12 +527,7 @@
           usuarioId: 1,
           data: $("#validate").val(),
         };
-        let id_notice = window.localStorage.getItem("id_notice");
-        if (id_notice != null) {
-          updateNotice(data_form, id_notice);
-        } else {
-          createNotice(data_form);
-        }
+        createNotice(data_form);
       });
     </script>
   </body>

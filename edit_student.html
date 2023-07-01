@@ -109,7 +109,7 @@
             <ul class="menu">
               <li class="sidebar-title">Menu</li>
 
-              <li class="sidebar-item active">
+              <li class="sidebar-item">
                 <a href="home.html" class="sidebar-link">
                   <i class="bi bi-grid-fill"></i>
                   <span>Home</span>
@@ -117,9 +117,9 @@
               </li>
 
               <li class="sidebar-item">
-                <a href="videos.html" class="sidebar-link">
+                <a href="contents.html" class="sidebar-link">
                   <i class="bi bi-camera-reels-fill"></i>
-                  <span>Vídeos</span>
+                  <span>Conteúdos</span>
                 </a>
               </li>
 
@@ -300,9 +300,9 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                  <h3>Vertical Layout with Navbar</h3>
-                  <p class="text-subtitle text-muted">
-                    Navbar will appear on the top of the page.
+                  <h3 id="page_title">Editando aluno</h3>
+                  <p id="page_subtitle" class="text-subtitle text-muted">
+                    Edição de alunos.
                   </p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
@@ -311,31 +311,169 @@
                     class="breadcrumb-header float-start float-lg-end"
                   >
                     <ol class="breadcrumb">
-                      <!-- <li class="breadcrumb-item">
-                        <a href="/pages/index.html">Home</a>
-                      </li> -->
+                      <li class="breadcrumb-item">
+                        <a href="home.html">Home</a>
+                      </li>
+                      <li class="breadcrumb-item">
+                        <a href="students.html">Alunos</a>
+                      </li>
                       <li class="breadcrumb-item active" aria-current="page">
-                        Home
+                        Editar Aluno
                       </li>
                     </ol>
                   </nav>
                 </div>
               </div>
             </div>
-            <section class="section">
+          </div>
+          <div class="row match-height">
+            <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title">Example Content</h4>
+                  <h4 class="card-title">Informações do Aluno</h4>
                 </div>
-                <div class="card-body">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Consectetur quas omnis laudantium tempore exercitationem,
-                  expedita aspernatur sed officia asperiores unde tempora maxime
-                  odio reprehenderit distinctio incidunt! Vel aspernatur dicta
-                  consequatur!
+                <div class="card-content">
+                  <div class="card-body">
+                    <form id="form_student" class="form">
+                      <div class="row">
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label for="first-name-column">Nome</label>
+                            <input
+                              type="text"
+                              id="name"
+                              class="form-control"
+                              placeholder="Nome"
+                              name="name"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label for="last-name-column">Sobrenome</label>
+                            <input
+                              type="text"
+                              id="last_name"
+                              class="form-control"
+                              placeholder="Sobrenome"
+                              name="last_name"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <input
+                              type="text"
+                              id="cpf"
+                              class="form-control cpf"
+                              placeholder="CPF"
+                              name="cpf"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label for="registration">Matrícula</label>
+                            <input
+                              type="text"
+                              id="registration"
+                              class="form-control"
+                              name="registration"
+                              placeholder="Matrícula"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label for="school">Escola</label>
+                            <input
+                              type="text"
+                              id="school"
+                              class="form-control"
+                              name="school"
+                              placeholder="Escola"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label for="email">Email</label>
+                            <input
+                              type="email"
+                              id="email"
+                              class="form-control"
+                              name="email"
+                              placeholder="Email"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label for="stage">Etapa de Ensino</label>
+                            <select
+                              type="text"
+                              id="stage"
+                              class="form-control"
+                              name="stage"
+                              placeholder="Etapa de Ensino"
+                              required
+                            >
+                              <option value="" selected disabled>
+                                Escolha a etapa de Ensino
+                              </option>
+                              <option value="Educação infantil">
+                                Educação infantil
+                              </option>
+                              <option value="Ensino Fundamental">
+                                Ensino Fundamental
+                              </option>
+                              <option value="Ensino Médio">Ensino Médio</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label for="series">Série</label>
+                            <input
+                              type="text"
+                              id="series"
+                              class="form-control"
+                              name="series"
+                              placeholder="Série"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-end">
+                          <button
+                            id="add-student"
+                            type="submit"
+                            class="btn btn-primary me-1 mb-1"
+                          >
+                            Atualizar
+                          </button>
+                          <a
+                            href="students.html"
+                            type="reset"
+                            class="btn btn-light-secondary me-1 mb-1"
+                          >
+                            Cancelar
+                          </a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </section>
+            </div>
           </div>
 
           <footer>
@@ -360,8 +498,115 @@
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/app.js"></script>
 
-    <!-- Need: Apexcharts -->
-    <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
-    <script src="assets/js/pages/dashboard.js"></script>
+    <script src="assets/extensions/jquery/jquery.min.js"></script>
+
+    <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
+      integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="assets/js/project.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".cpf").mask("000.000.000-00", { reverse: true });
+
+        let id_student = window.localStorage.getItem("id_student");
+        if (id_student == undefined) {
+          window.location.replace("students.html");
+        } else {
+          getStudent(id_student);
+        }
+      });
+
+      function getStudent(id) {
+        fetch(`https://faceduc.azurewebsites.net/aluno/${id}`)
+          .then(function (response) {
+            if (response.ok) {
+              // Lógica de sucesso
+              console.log("Requisição GET bem-sucedida!");
+
+              return response.json();
+            } else {
+              // Lógica de erro
+              console.error("Erro na requisição GET:", response.statusText);
+            }
+          })
+          .then(function (data) {
+            console.log(data);
+            setValueEdit(data);
+          })
+          .catch(function (error) {
+            // Lógica de erro
+            console.error("Erro na requisição GET:", error);
+          });
+      }
+
+      function setValueEdit(student) {
+        $("#name").val(student.nome);
+        $("#last_name").val(student.sobreNome);
+        $("#registration").val(student.matricula);
+        $("#cpf").val(student.cpf);
+        $("#school").val(student.escola);
+        $("#email").val(student.email);
+        $("#stage").val(student.etapa);
+        $("#series").val(student.serie);
+      }
+
+      $("#form_student").submit(function () {
+        event.preventDefault();
+        let id_student = window.localStorage.getItem("id_student");
+        data_form = {
+          nome: $("#name").val(),
+          sobreNome: $("#last_name").val(),
+          matricula: $("#registration").val(),
+          cpf: $("#cpf").val(),
+          escola: $("#school").val(),
+          email: $("#email").val(),
+          etapa: $("#stage").val(),
+          serie: $("#series").val(),
+        };
+        console.log(data_form);
+        updateStudent(data_form, id_student);
+      });
+
+      function updateStudent(data_form, id) {
+        var options = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data_form),
+        };
+
+        // Enviando os dados via Fetch API
+        fetch(`https://faceduc.azurewebsites.net/aluno/${id}`, options)
+          .then(function (response) {
+            if (response.ok) {
+              // Lógica de sucesso
+              console.log("Dados enviados com sucesso!");
+              window.localStorage.setItem("update_student", true);
+              window.location.replace("students.html");
+              window.localStorage.removeItem("id_student");
+            } else {
+              // Lógica de erro
+              console.error("Erro ao enviar os dados:", response.statusText);
+              Toast.fire({
+                icon: "error",
+                title: "Error ao atualizar o aluno!",
+              });
+            }
+          })
+          .catch(function (error) {
+            // Lógica de erro
+            console.error("Erro ao enviar os dados:", error);
+            Toast.fire({
+              icon: "error",
+              title: `Error ao atualizar o aluno! <br> ${error}`,
+            });
+          });
+      }
+    </script>
   </body>
 </html>
