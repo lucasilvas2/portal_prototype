@@ -335,7 +335,7 @@
                 </div>
                 <div class="card-content">
                   <div class="card-body">
-                    <form class="form">
+                    <form id="form_content" class="form">
                       <div class="row">
                         <div class="col-md-6 col-12">
                           <div class="form-group">
@@ -382,13 +382,21 @@
                                 Selecione o tipo do conteúdo
                               </option>
                               <option value="text">Texto</option>
-                              <option value="video">Vídeo</option>
+                              <optgroup label="Vídeos">
+                                <option value="file">Arquivo</option>
+                                <option value="link">Link Youtube</option>
+                              </optgroup>
                               <option value="image">Imagem</option>
                             </select>
                           </div>
                         </div>
+
+                        <!-- VÍDEO -->
                         <div id="partials-video" class="row d-none">
-                          <div class="col-md-6 col-12">
+                          <div
+                            id="partials-file"
+                            class="col-md-6 col-12 d-none"
+                          >
                             <div class="form-group">
                               <label for="registration">Arquivo</label>
                               <input
@@ -401,7 +409,10 @@
                               />
                             </div>
                           </div>
-                          <div class="col-md-6 col-12">
+                          <div
+                            id="partials-link"
+                            class="col-md-6 col-12 d-none"
+                          >
                             <div class="form-group">
                               <label for="school">Link You Tube</label>
                               <input
@@ -439,9 +450,9 @@
                               <label for="registration">Arquivo</label>
                               <input
                                 type="file"
-                                id="file_text"
+                                id="file_image"
                                 class="form-control"
-                                name="file_text"
+                                name="file_image"
                                 placeholder="Arquivo .jpeg, , .png"
                                 accept=".jpeg, .png"
                               />
@@ -494,24 +505,21 @@
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/app.js"></script>
 
-    <!-- Need: Apexcharts -->
-    <!-- <script src="assets/extensions/apexcharts/apexcharts.min.js"></script> -->
-    <script src="assets/js/pages/dashboard.js"></script>
-
     <script src="assets/extensions/tinymce/tinymce.min.js"></script>
     <script src="assets/static/js/pages/tinymce.js"></script>
     <script src="assets/extensions/jquery/jquery.min.js"></script>
 
     <script src="assets/extensions/choices.js/public/assets/scripts/choices.js"></script>
     <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
     <script src="assets/js/project.js"></script>
     <script>
-      $("#btn-create").click(function (event) {
-        event.preventDefault();
-        console.log(event);
-        window.localStorage.setItem("create_content", true);
-        window.location.replace("contents.html");
-      });
+      // $("#btn-create").click(function (event) {
+      //   event.preventDefault();
+      //   console.log(event);
+      //   window.localStorage.setItem("create_content", true);
+      //   window.location.replace("contents.html");
+      // });
 
       $(document).ready(function () {
         let element = document.getElementById("tags");
@@ -529,6 +537,8 @@
         let type = event.target.value;
         let text = $("#partials-text");
         let video = $("#partials-video");
+        let file = $("#partials-file");
+        let link = $("#partials-link");
         let image = $("#partials-image");
         switch (type) {
           case "text":
@@ -536,20 +546,122 @@
             video.addClass("d-none");
             image.addClass("d-none");
             break;
-          case "video":
-            text.addClass("d-none");
+          case "file":
             video.removeClass("d-none");
+            file.removeClass("d-none");
+            link.addClass("d-none");
+            text.addClass("d-none");
+            image.addClass("d-none");
+            break;
+          case "link":
+            video.removeClass("d-none");
+            link.removeClass("d-none");
+            file.addClass("d-none");
+            text.addClass("d-none");
             image.addClass("d-none");
             break;
           case "image":
+            image.removeClass("d-none");
             text.addClass("d-none");
             video.addClass("d-none");
-            image.removeClass("d-none");
             break;
           default:
             break;
         }
       });
+
+      $("#form_content").submit(async function (event) {
+        event.preventDefault();
+        let user = JSON.parse(localStorage.getItem("user"));
+
+        data_form = {
+          titulo: $("#title").val(),
+          descricao: $("#description").val(),
+          tipo: $("#select_type").val(),
+          usuarioId: user.id,
+          data: moment().format("Y-MM-DD"),
+        };
+        let url = "";
+        let type = $("#select_type").val();
+        switch (type) {
+          case "text":
+            data_form["texto"] = tinyMCE.get("text_edit").getContent();
+            break;
+          case "file":
+            url = await createFile($("#file_image")[0].files[0]);
+            data_form["uri"] = url;
+            data_form["nomeArquivo"] = $("#file_image")[0].files[0].name;
+            break;
+          case "link":
+            data_form["link"] = $("#link_youtube").val();
+            break;
+          case "image":
+            url = await createFile($("#file_image")[0].files[0]);
+            data_form["uri"] = url;
+            data_form["nomeArquivo"] = $("#file_image")[0].files[0].name;
+            break;
+          default:
+            break;
+        }
+        console.log(data_form);
+        createContent(data_form);
+      });
+
+      function createFile(file) {
+        let data = new FormData();
+        data.append("file", file);
+        var options = {
+          method: "POST",
+          body: data,
+        };
+
+        // Enviando os dados via Fetch API
+        return fetch(
+          "https://faceduc.azurewebsites.net/conteudo/files",
+          options
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            return data.url;
+          })
+          .catch((error) => console.error(error));
+      }
+
+      function createContent(data_form) {
+        var options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data_form),
+        };
+
+        // Enviando os dados via Fetch API
+        fetch("https://faceduc.azurewebsites.net/conteudo", options)
+          .then(function (response) {
+            if (response.ok) {
+              // Lógica de sucesso
+              console.log("Conteúdo com sucesso!");
+              window.localStorage.setItem("create_content", true);
+              window.location.replace("contents.html");
+            } else {
+              // Lógica de erro
+              console.error("Erro ao enviar os dados:", response.statusText);
+              Toast.fire({
+                icon: "error",
+                title: "Error ao cadastrar o comunicado!",
+              });
+            }
+          })
+          .catch(function (error) {
+            // Lógica de erro
+            console.error("Erro ao enviar os dados:", error);
+            Toast.fire({
+              icon: "error",
+              title: `Error ao cadastrar o comunicado! <br> ${error}`,
+            });
+          });
+      }
       function initTiny(element_textarea) {
         tinymce.init({
           selector: `#${element_textarea}`,
