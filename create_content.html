@@ -577,7 +577,7 @@
         data_form = {
           titulo: $("#title").val(),
           descricao: $("#description").val(),
-          tipo: $("#select_type").val(),
+          tipo: $("#select_type").val().split('')[0],
           usuarioId: user.id,
           data: moment().format("Y-MM-DD"),
         };
@@ -588,9 +588,9 @@
             data_form["texto"] = tinyMCE.get("text_edit").getContent();
             break;
           case "file":
-            url = await createFile($("#file_image")[0].files[0]);
+            url = await createFile($("#file_video")[0].files[0]);
             data_form["uri"] = url;
-            data_form["nomeArquivo"] = $("#file_image")[0].files[0].name;
+            data_form["nomeArquivo"] = $("#file_video")[0].files[0].name;
             break;
           case "link":
             data_form["link"] = $("#link_youtube").val();
