@@ -514,13 +514,6 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
     <script src="assets/js/project.js"></script>
     <script>
-      // $("#btn-create").click(function (event) {
-      //   event.preventDefault();
-      //   console.log(event);
-      //   window.localStorage.setItem("create_content", true);
-      //   window.location.replace("contents.html");
-      // });
-
       $(document).ready(function () {
         let element = document.getElementById("tags");
         let select_tags = new Choices(element, {
@@ -577,7 +570,7 @@
         data_form = {
           titulo: $("#title").val(),
           descricao: $("#description").val(),
-          tipo: $("#select_type").val(),
+          tipo: $("#select_type").val().split("")[0],
           usuarioId: user.id,
           data: moment().format("Y-MM-DD"),
         };

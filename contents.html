@@ -335,39 +335,8 @@
               Matemática
             </button>
           </div>
-          <div class="row">
-            <div class="col-xl-4 col-md-6 col-sm-12 content video math">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <h4 class="card-title mb-0">Video Card</h4>
-                  </div>
-                  <div
-                    class="embed-responsive embed-responsive-item embed-responsive-16by9 w-100"
-                  >
-                    <iframe
-                      src="https://www.youtube.com/embed/dbPOAH7U6gk?list=PLlWL3aOWFGDj0YSvgfx_M9Iemb4n9igMo"
-                      title="FMC2, 2023-03-08: Intro, prés, e meta"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      style="width: 100%"
-                      height="300"
-                      allowfullscreen
-                    ></iframe>
-                  </div>
-                  <div class="card-body">
-                    <p class="card-text">
-                      Candy cupcake sugar plum oat cake wafer marzipan jujubes.
-                      Jelly-o sesame snaps cheesecake topping. Cupcake fruitcake
-                      macaroon donut pastry gummies tiramisu chocolate bar
-                      muffin.
-                    </p>
-                    <a href="show_video.html" class="card-link">Assistir</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12 content video math">
+          <div id="div_content" class="row">
+            <!-- <div class="col-xl-4 col-md-6 col-sm-12 content video math">
               <div class="card">
                 <div class="card-content">
                   <div class="card-body">
@@ -426,7 +395,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <footer>
@@ -452,6 +421,7 @@
     <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
     <script src="assets/js/project.js"></script>
   </body>
 </html>
@@ -467,8 +437,123 @@
 
       window.localStorage.setItem("create_content", false);
     }
+
+    let data = getConteudos();
   });
 
+  async function getConteudos() {
+    var options = {
+      method: "GET",
+    };
+
+    // Enviando os dados via Fetch API
+    return fetch("https://faceduc.azurewebsites.net/conteudos", options)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        addCardContent(data);
+        return data.url;
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function addCardContent(contents) {
+    let div_content = $("#div_content");
+
+    $.each(contents, function (content) {
+      console.log(this.tipo);
+      let card = "";
+      switch (this.tipo.toUpperCase()) {
+        case "L":
+          card = cardVideo(this);
+          break;
+        case "V":
+          break;
+        case "T":
+          card = cardText(this);
+          break;
+        case "I":
+          break;
+        default:
+          break;
+      }
+      div_content.append(card);
+    });
+  }
+
+  function youtube_parser(url) {
+    var regExp =
+      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    return match && match[7].length == 11 ? match[7] : false;
+  }
+
+  function cardVideo(video) {
+    var video_id = youtube_parser(video.link);
+    let card = `
+    <div class="col-xl-4 col-md-6 col-sm-12 content video math">
+              <div class="card">
+                <div class="card-content">
+                  <div class="card-body">
+                    <h4 class="card-title mb-0">${video.titulo}</h4>
+                  </div>
+                  <div
+                    class="embed-responsive embed-responsive-item embed-responsive-16by9 w-100"
+                  >
+                    <iframe
+                      src="http://www.youtube.com/embed/${video_id}"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      style="width: 100%"
+                      height="300"
+                      allowfullscreen
+                    ></iframe>
+                  </div>
+                  <div class="card-body">
+                    <p>Criado por: ${text.usuario.nome}</p>
+                    <p class="card-text">
+                      ${video.descricao}
+                    </p>
+                    <a href="show_video.html" class="card-link">Assistir</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+    `;
+    return card;
+  }
+
+  function cardText(text) {
+    let card = `
+    <div class="col-xl-4 col-md-6 col-sm-12 content text">
+              <div class="card">
+                <div class="card-content">
+                  <div class="card-body">
+                    <h4 class="card-title mb-0">${text.titulo}</h4>
+                  </div>
+                  <a
+                    href="show_text.html"
+                    class="d-flex justify-content-center"
+                  >
+                    <img
+                      src="assets/images/project/a-book-1157658_1920.png"
+                      alt="image_book"
+                      height="270px"
+                    />
+                  </a>
+                  <div class="card-body">
+                    <p>Criado por: ${text.usuario.nome}</p>
+                    <p class="card-text">
+                      ${text.descricao}
+                    </p>
+                    <a href="show_text.html" class="card-link">Ler</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+    `;
+    return card;
+  }
   $("#btn-all").click(function () {
     $(".content").each(function (index) {
       this.classList.remove("d-none");
