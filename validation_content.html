@@ -503,6 +503,16 @@
 
       window.localStorage.setItem("validation_content", false);
     }
+
+    let delete_content = window.localStorage.getItem("delete_content");
+    if (delete_content === "true") {
+      Toast.fire({
+        icon: "success",
+        title: "Conteúdo rejeitado com sucesso!",
+      });
+
+      window.localStorage.setItem("delete_content", false);
+    }
   });
 
   function addEventValidation() {
@@ -617,6 +627,19 @@
         .then((data) => {
           updateContent(data, btn_type);
           return data.url;
+        })
+        .catch((error) => console.error(error));
+    } else {
+      var options = {
+        method: "DELETE",
+      };
+
+      // Enviando os dados via Fetch API
+      fetch(`https://faceduc.azurewebsites.net/conteudo/${id}`, options)
+        // .then((response) => response.json())
+        .then(() => {
+          window.localStorage.setItem("delete_content", true);
+          window.location.replace("validation_content.html");
         })
         .catch((error) => console.error(error));
     }
@@ -755,7 +778,6 @@
   }
 
   function cardImage(image) {
-    console.log(image);
     let card = `
     <div class="col-xl-4 col-md-6 col-sm-12 content image">
               <div class="card">
