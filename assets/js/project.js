@@ -14,7 +14,11 @@ $(document).ready(function () {
   let type = localStorage.getItem("type_perfil");
   let user = JSON.parse(localStorage.getItem("user"));
 
-  if (user == undefined && window.location.pathname != "/register.html") {
+  if (
+    user == undefined &&
+    window.location.pathname.search("/register.html") < 0
+  ) {
+    console.log(window.location.pathname.search("/register.html"));
     window.location.replace("index.html");
   }
 
