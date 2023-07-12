@@ -452,7 +452,7 @@
         let id_notice = window.localStorage.getItem("id_notice");
         console.log(id_notice);
         if (id_notice == undefined) {
-          window.location.replace("students.html");
+          window.location.assign("students.html");
         }
       });
 
@@ -539,7 +539,7 @@
               // Lógica de sucesso
               console.log("Dados enviados com sucesso!");
               window.localStorage.setItem("update_notice", true);
-              window.location.replace("notices.html");
+              window.location.assign("notices.html");
               window.localStorage.removeItem("id_notice");
             } else {
               // Lógica de erro

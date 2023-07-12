@@ -183,7 +183,7 @@
           // Lógica de sucesso
           console.log("Dados enviados com sucesso!");
           window.localStorage.setItem("register", true);
-          window.location.replace("index.html");
+          window.location.assign("index.html");
         } else {
           // Lógica de erro
           console.error("Erro ao enviar os dados:", response.statusText);

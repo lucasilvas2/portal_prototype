@@ -514,7 +514,7 @@
 
         let id_student = window.localStorage.getItem("id_student");
         if (id_student == undefined) {
-          window.location.replace("students.html");
+          window.location.assign("students.html");
         } else {
           getStudent(id_student);
         }
@@ -587,7 +587,7 @@
               // Lógica de sucesso
               console.log("Dados enviados com sucesso!");
               window.localStorage.setItem("update_student", true);
-              window.location.replace("students.html");
+              window.location.assign("students.html");
               window.localStorage.removeItem("id_student");
             } else {
               // Lógica de erro

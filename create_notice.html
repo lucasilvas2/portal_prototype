@@ -493,7 +493,7 @@
               // Lógica de sucesso
               console.log("Dados enviados com sucesso!");
               window.localStorage.setItem("create_notice", true);
-              window.location.replace("notices.html");
+              window.location.assign("notices.html");
             } else {
               // Lógica de erro
               console.error("Erro ao enviar os dados:", response.statusText);

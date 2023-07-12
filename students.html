@@ -486,7 +486,7 @@
         $(".edit").click(function (event) {
           let id = event.currentTarget.closest("tr").children[0].innerHTML;
           window.localStorage.setItem("id_student", id);
-          window.location.replace("edit_student.html");
+          window.location.assign("edit_student.html");
         });
       }
 

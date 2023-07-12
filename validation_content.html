@@ -579,7 +579,7 @@
           // Lógica de sucesso
           console.log("Conteúdo validado com sucesso!");
           window.localStorage.setItem("validation_content", true);
-          window.location.replace("validation_content.html");
+          window.location.assign("validation_content.html");
         } else {
           // Lógica de erro
           console.error("Erro ao enviar os dados:", response.statusText);
@@ -639,7 +639,7 @@
         // .then((response) => response.json())
         .then(() => {
           window.localStorage.setItem("delete_content", true);
-          window.location.replace("validation_content.html");
+          window.location.assign("validation_content.html");
         })
         .catch((error) => console.error(error));
     }

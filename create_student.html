@@ -553,7 +553,7 @@
               // Lógica de sucesso
               console.log("Dados enviados com sucesso!");
               window.localStorage.setItem("added_student", true);
-              window.location.replace("students.html");
+              window.location.assign("students.html");
             } else {
               // Lógica de erro
               console.error("Erro ao enviar os dados:", response.statusText);

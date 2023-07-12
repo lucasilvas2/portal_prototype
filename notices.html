@@ -501,7 +501,7 @@
           let id = event.currentTarget.closest("tr").children[0].innerHTML;
           console.log(id);
           window.localStorage.setItem("id_notice", id);
-          window.location.replace("edit_notice.html");
+          window.location.assign("edit_notice.html");
         });
       }
 
