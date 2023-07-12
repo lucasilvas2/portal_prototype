@@ -331,103 +331,15 @@
               <div class="card">
                 <div class="card-content">
                   <div class="card-body">
-                    <h4 class="card-title mb-0">Título Conteúdo</h4>
+                    <h4 id="card-title" class="card-title mb-0"></h4>
                   </div>
                   <div class="card-body">
-                    <div class="text">
-                      <p>
-                        Biscuit powder jelly beans. Lollipop candy canes
-                        croissant icing chocolate cake. Cake fruitcake powder
-                        pudding pastry
-                      </p>
-                      <p>
-                        Tootsie roll oat cake I love bear claw I love caramels
-                        caramels halvah chocolate bar. Cotton candy gummi bears
-                        pudding pie apple pie cookie. Cheesecake jujubes lemon
-                        drops danish dessert I love caramels powder
-                      </p>
-                      <p>
-                        Chocolate cake icing tiramisu liquorice toffee donut
-                        sweet roll cake. Cupcake dessert icing dragée dessert.
-                        Liquorice jujubes cake tart pie donut. Cotton candy
-                        candy canes lollipop liquorice chocolate marzipan muffin
-                        pie liquorice.
-                      </p>
-                      <p>
-                        Powder cookie jelly beans sugar plum ice cream. Candy
-                        canes I love powder sugar plum tiramisu. Liquorice
-                        pudding chocolate cake cupcake topping biscuit. Lemon
-                        drops apple pie sesame snaps tootsie roll carrot cake
-                        soufflé halvah. Biscuit powder jelly beans. Lollipop
-                        candy canes croissant icing chocolate cake. Cake
-                        fruitcake powder pudding pastry.
-                      </p>
-                      <p>
-                        Tootsie roll oat cake I love bear claw I love caramels
-                        caramels halvah chocolate bar. Cotton candy gummi bears
-                        pudding pie apple pie cookie. Cheesecake jujubes lemon
-                        drops danish dessert I love caramels powder.
-                      </p>
-                      <p>
-                        dragée dessert. Liquorice jujubes cake tart pie donut.
-                        Cotton candy candy canes lollipop liquorice chocolate
-                        marzipan muffin pie liquorice.
-                      </p>
-                      <p>
-                        Powder cookie jelly beans sugar plum ice cream. Candy
-                        canes I love powder sugar plum tiramisu. Liquorice
-                        pudding chocolate cake cupcake topping biscuit. Lemon
-                        drops apple pie sesame snaps tootsie roll carrot cake
-                        soufflé halvah.Biscuit powder jelly beans. Lollipop
-                        candy canes croissant icing chocolate cake. Cake
-                        fruitcake powder pudding pastry.
-                      </p>
-                      <p>
-                        Tootsie roll oat cake I love bear claw I love caramels
-                        caramels halvah chocolate bar. Cotton candy gummi bears
-                        pudding pie apple pie cookie. Cheesecake jujubes lemon
-                        drops danish dessert I love caramels powder.
-                      </p>
-                      <p>
-                        Chocolate cake icing tiramisu liquorice toffee donut
-                        sweet roll cake. Cupcake dessert icing dragée dessert.
-                        Liquorice jujubes cake tart pie donut. Cotton candy
-                        candy canes lollipop liquorice chocolate marzipan muffin
-                        pie liquorice.
-                      </p>
-                      <p>
-                        Powder cookie jelly beans sugar plum ice cream. Candy
-                        canes I love powder sugar plum tiramisu. Liquorice
-                        pudding chocolate cake cupcake topping biscuit. Lemon
-                        drops apple pie sesame snaps tootsie roll carrot cake
-                        soufflé halvah. Biscuit powder jelly beans. Lollipop
-                        candy canes croissant icing chocolate cake. Cake
-                        fruitcake powder pudding pastry.
-                      </p>
-                      <p>
-                        Tootsie roll oat cake I love bear claw I love caramels
-                        caramels halvah chocolate bar. Cotton candy gummi bears
-                        pudding pie apple pie cookie. Cheesecake jujubes lemon
-                        drops danish dessert I love caramels powder.
-                      </p>
-                      <p>
-                        Chocolate cake icing tiramisu liquorice toffee donut
-                        sweet roll cake. Cupcake dessert icing dragée dessert.
-                        Liquorice jujubes cake tart pie donut. Cotton candy
-                        candy canes lollipop liquorice chocolate marzipan muffin
-                        pie liquorice.
-                      </p>
-                      <p>
-                        Powder cookie jelly beans sugar plum ice cream. Candy
-                        canes I love powder sugar plum tiramisu. Liquorice
-                        pudding chocolate cake cupcake topping biscuit. Lemon
-                        drops apple pie sesame snaps tootsie roll carrot cake
-                        soufflé halvah.
-                      </p>
-                    </div>
+                    <div id="text-body" class="text"></div>
                     <hr />
                     <div class="row align-items-center mb-4">
-                      <div class="col-3"><p>Criado por: Aluno</p></div>
+                      <div class="col-3">
+                        <p id="user">Criado por: Aluno</p>
+                      </div>
                       <div class="col-9 d-flex justify-content-end">
                         <button
                           class="btn btn-secondary w-auto btn-interaction"
@@ -456,12 +368,7 @@
                       </div>
                     </div>
                     <div class="row">
-                      <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Quas nam odio facilis incidunt earum doloribus est
-                        quasi impedit id, esse ipsa culpa hic assumenda tempora
-                        corrupti? Veritatis ipsa eaque sed.
-                      </p>
+                      <p id="description"></p>
                     </div>
                   </div>
                 </div>
@@ -570,6 +477,12 @@
 
       window.localStorage.setItem("create_content", false);
     }
+
+    let content_id = window.localStorage.getItem("text_show_content_id");
+
+    if (content_id != null) {
+      getConteudo(content_id);
+    }
   });
 
   $(".btn-interaction").click(function (event) {
@@ -606,5 +519,29 @@
     `;
     div_comments.append(new_comment);
     $("#comment").val("");
+  }
+
+  async function getConteudo(id) {
+    console.log(id);
+    var options = {
+      method: "GET",
+    };
+
+    // Enviando os dados via Fetch API
+    return fetch(`https://faceduc.azurewebsites.net/conteudo/${id}`, options)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        cardText(data);
+        return data.url;
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function cardText(text) {
+    $("#card-title")[0].innerHTML = `${text.titulo}`;
+    $("#text-body")[0].innerHTML = `${text.texto}`;
+    // $("#user")[0].innerHTML = `Criado por: ${text.usuario.nome}`;
+    $("#description")[0].innerHTML = `${text.descricao}`;
   }
 </script>

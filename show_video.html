@@ -331,12 +331,13 @@
               <div class="card">
                 <div class="card-content">
                   <div class="card-body">
-                    <h4 class="card-title mb-0">Video Card</h4>
+                    <h4 id="title" class="card-title mb-0">Video Card</h4>
                   </div>
                   <div
+                    id="embed-iframe"
                     class="embed-responsive embed-responsive-item embed-responsive-16by9 w-100"
                   >
-                    <iframe
+                    <!-- <iframe
                       src="https://www.youtube.com/embed/dbPOAH7U6gk?list=PLlWL3aOWFGDj0YSvgfx_M9Iemb4n9igMo"
                       title="FMC2, 2023-03-08: Intro, prés, e meta"
                       frameborder="0"
@@ -344,11 +345,13 @@
                       style="width: 100%"
                       height="500"
                       allowfullscreen
-                    ></iframe>
+                    ></iframe> -->
                   </div>
                   <div class="card-body">
                     <div class="row align-items-center mb-4">
-                      <div class="col-3"><p>Criado por: Aluno</p></div>
+                      <div class="col-3">
+                        <p id="user">Criado por: Aluno</p>
+                      </div>
                       <div class="col-9 d-flex justify-content-end">
                         <button
                           class="btn btn-secondary w-auto btn-interaction"
@@ -377,12 +380,7 @@
                       </div>
                     </div>
                     <div class="row">
-                      <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Quas nam odio facilis incidunt earum doloribus est
-                        quasi impedit id, esse ipsa culpa hic assumenda tempora
-                        corrupti? Veritatis ipsa eaque sed.
-                      </p>
+                      <p id="description"></p>
                     </div>
                   </div>
                 </div>
@@ -469,16 +467,12 @@
     <script src="assets/extensions/jquery/jquery.min.js"></script>
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/app.js"></script>
-
-    <!-- Need: Apexcharts -->
-    <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
-    <script src="assets/js/pages/dashboard.js"></script>
   </body>
 </html>
 
 <script src="assets/extensions/jquery/jquery.min.js"></script>
-<script src="assets/js/project.js"></script>
 <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
+<script src="assets/js/project.js"></script>
 <script>
   $(document).ready(function () {
     let create_content = window.localStorage.getItem("create_content");
@@ -490,6 +484,12 @@
       });
 
       window.localStorage.setItem("create_content", false);
+    }
+
+    let content_id = window.localStorage.getItem("video_show_content_id");
+
+    if (content_id != null) {
+      getConteudo(content_id);
     }
   });
 
@@ -527,5 +527,44 @@
     `;
     div_comments.append(new_comment);
     $("#comment").val("");
+  }
+
+  async function getConteudo(id) {
+    console.log(id);
+    var options = {
+      method: "GET",
+    };
+
+    // Enviando os dados via Fetch API
+    return fetch(`https://faceduc.azurewebsites.net/conteudo/${id}`, options)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        cardText(data);
+        return data.url;
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function youtube_parser(url) {
+    var regExp =
+      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    return match && match[7].length == 11 ? match[7] : false;
+  }
+
+  function cardText(video) {
+    var video_id = youtube_parser(video.link);
+    $("#title")[0].innerHTML = `${video.titulo}`;
+    $("#embed-iframe")[0].innerHTML = `<iframe
+                      src="https://www.youtube.com/embed/${video_id}"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      style="width: 100%"
+                      height="500"
+                      allowfullscreen
+                    ></iframe>`;
+    // $("#user")[0].innerHTML = `Criado por: ${video.usuario.nome}`;
+    $("#description")[0].innerHTML = `${video.descricao}`;
   }
 </script>

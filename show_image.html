@@ -300,10 +300,10 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                  <h3>Conteúdos</h3>
+                  <!-- <h3>Vídeos</h3>
                   <p class="text-subtitle text-muted">
                     Todos os conteúdos disponiveis.
-                  </p>
+                  </p> -->
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                   <nav
@@ -314,8 +314,11 @@
                       <li class="breadcrumb-item">
                         <a href="home.html">Home</a>
                       </li>
+                      <li class="breadcrumb-item">
+                        <a href="contents.html">Conteúdos</a>
+                      </li>
                       <li class="breadcrumb-item active" aria-current="page">
-                        Conteúdos
+                        Imagem
                       </li>
                     </ol>
                   </nav>
@@ -323,20 +326,113 @@
               </div>
             </div>
           </div>
-          <div class="d-sm-flex mx-2 mb-4">
-            <button id="btn-all" class="btn btn-secondary w-auto">Todos</button>
-            <button id="btn-text" class="btn btn-secondary w-auto ms-2">
-              Texto
-            </button>
-            <button id="btn-video" class="btn btn-secondary w-auto ms-2">
-              Vídeo
-            </button>
-            <button id="btn-image" class="btn btn-secondary w-auto ms-2">
-              Imagem
-            </button>
+          <div class="row justify-content-center">
+            <dvi class="col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="card-body">
+                    <h4 id="title" class="card-title mb-0"></h4>
+                  </div>
+                  <div class="card-body">
+                    <div id="image" class="image"></div>
+                    <hr />
+                    <div class="row align-items-center mb-4">
+                      <div class="col-3">
+                        <p id="user">Criado por: Aluno</p>
+                      </div>
+                      <div class="col-9 d-flex justify-content-end">
+                        <button
+                          class="btn btn-secondary w-auto btn-interaction"
+                        >
+                          <span>&#128077;</span> Gostei
+                          <span class="badge bg-transparent">0</span>
+                        </button>
+                        <button
+                          class="btn btn-secondary w-auto ms-2 btn-interaction"
+                        >
+                          <span>&#129505;</span> Amei
+                          <span class="badge bg-transparent">0</span>
+                        </button>
+                        <button
+                          class="btn btn-secondary w-auto ms-2 btn-interaction"
+                        >
+                          <span>&#128079;</span> Parabéns
+                          <span class="badge bg-transparent">0</span>
+                        </button>
+                        <button
+                          class="btn btn-secondary w-auto ms-2 btn-interaction"
+                        >
+                          <span>&#128161;</span> Genial
+                          <span class="badge bg-transparent">0</span>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <p id="description"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row ps-2">
+                <div class="col-12">
+                  <h6>Comentários</h6>
+                </div>
+                <div class="row align-items-top">
+                  <div class="col-auto">
+                    <div class="avatar bg-warning me-3">
+                      <img src="assets/images/faces/1.jpg" alt="" srcset="" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <form action="#" id="form_coment">
+                      <input
+                        id="comment"
+                        name="comment"
+                        type="text"
+                        placeholder="Adicione um comentário..."
+                        class="form-control"
+                        required
+                      />
+                      <div id="div_button" class="row justify-content-end m-2">
+                        <button
+                          class="row w-auto btn btn-secondary"
+                          type="submit"
+                        >
+                          Comentar
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div id="partial-comments">
+                  <div class="row mt-4">
+                    <div class="col-auto">
+                      <div class="avatar bg-warning me-3">
+                        <img src="assets/images/faces/2.jpg" alt="" srcset="" />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="row">
+                        <div class="d-flex">
+                          <p class="fw-bold">Fernando</p>
+                          <span class="text-muted ms-4">há 1 dia</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipisicing
+                          elit. Hic deserunt aliquam quia odio eligendi
+                          excepturi officia facilis eum iste, dolor
+                          reprehenderit libero obcaecati laudantium enim
+                          voluptate rerum facere dolorum ex!
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </dvi>
           </div>
-          <div id="div_content" class="row"></div>
-
           <footer>
             <div class="footer clearfix mb-0 text-muted">
               <div class="float-start">
@@ -357,17 +453,18 @@
       </div>
     </div>
     <script src="assets/extensions/jquery/jquery.min.js"></script>
-    <script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-    <script src="assets/js/project.js"></script>
   </body>
 </html>
 
+<script src="assets/extensions/jquery/jquery.min.js"></script>
+<script src="assets/extensions/sweetalert2/sweetalert2.all.js"></script>
+<script src="assets/js/project.js"></script>
 <script>
   $(document).ready(function () {
     let create_content = window.localStorage.getItem("create_content");
+
     if (create_content === "true") {
       Toast.fire({
         icon: "success",
@@ -377,199 +474,74 @@
       window.localStorage.setItem("create_content", false);
     }
 
-    let data = getConteudos();
+    let content_id = window.localStorage.getItem("image_show_content_id");
+
+    if (content_id != null) {
+      getConteudo(content_id);
+    }
   });
 
-  async function getConteudos() {
+  $(".btn-interaction").click(function (event) {
+    event.currentTarget.children[1].innerHTML =
+      parseInt(event.currentTarget.children[1].innerHTML) + parseInt(1);
+  });
+
+  $("#form_coment").submit(function (event) {
+    event.preventDefault();
+    add_comment(event.target.children[0].value);
+  });
+
+  function add_comment(comment) {
+    let div_comments = $("#partial-comments");
+    let new_comment = `
+      <div class="row mt-4">
+        <div class="col-auto">
+          <div class="avatar bg-warning me-3">
+            <img src="assets/images/faces/1.jpg" alt="" srcset="" />
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="d-flex">
+              <p class="fw-bold">John Ducky</p>
+              <span class="text-muted ms-4">agora</span>
+            </div>
+          </div>
+          <div class="row">
+            <p>${comment}</p>
+          </div>
+        </div>
+      </div>
+    `;
+    div_comments.append(new_comment);
+    $("#comment").val("");
+  }
+
+  async function getConteudo(id) {
+    console.log(id);
     var options = {
       method: "GET",
     };
 
     // Enviando os dados via Fetch API
-    return fetch("https://faceduc.azurewebsites.net/conteudos", options)
+    return fetch(`https://faceduc.azurewebsites.net/conteudo/${id}`, options)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        addCardContent(data);
+        cardImage(data);
         return data.url;
       })
       .catch((error) => console.error(error));
   }
 
-  function addCardContent(contents) {
-    let div_content = $("#div_content");
-
-    $.each(contents, function (content) {
-      console.log(this.tipo);
-      let card = "";
-      if (this.status) {
-        switch (this.tipo.toUpperCase()) {
-          case "L":
-            card = cardVideo(this);
-            break;
-          case "V":
-            break;
-          case "T":
-            card = cardText(this);
-            break;
-          case "I":
-            card = cardImage(this);
-            break;
-          default:
-            break;
-        }
-        div_content.append(card);
-      }
-    });
-
-    addEventButtonsLinks();
-  }
-
-  function youtube_parser(url) {
-    var regExp =
-      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-    var match = url.match(regExp);
-    return match && match[7].length == 11 ? match[7] : false;
-  }
-
-  function cardVideo(video) {
-    var video_id = youtube_parser(video.link);
-    let card = `
-    <div class="col-xl-4 col-md-6 col-sm-12 content video">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <h4 class="card-title mb-0">${video.titulo}</h4>
-                  </div>
-                  <div
-                    class="embed-responsive embed-responsive-item embed-responsive-16by9 w-100"
-                  >
-                    <iframe
-                      src="https://www.youtube.com/embed/${video_id}"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      style="width: 100%"
-                      height="300"
-                      allowfullscreen
-                    ></iframe>
-                  </div>
-                  <div class="card-body">
-                    <p>Criado por: ${video.usuario.nome}</p>
-                    <p class="card-text">
-                      ${video.descricao}
-                    </p>
-                    <a href="show_video.html" class="card-link" content-id="${video.id}" type="video">Assistir</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-    `;
-    return card;
-  }
-
-  function cardText(text) {
-    let card = `
-    <div class="col-xl-4 col-md-6 col-sm-12 content text">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <h4 class="card-title mb-0">${text.titulo}</h4>
-                  </div>
-                  <a
-                    href="show_text.html"
-                    class="d-flex justify-content-center"
-                  >
-                    <img class="img-fluid w-100 p-4"
-                      src="assets/images/project/a-book-1157658_1920.png"
-                      alt="image_book"
-                      height="300px"
-                    />
-                  </a>
-                  <div class="card-body">
-                    <p>Criado por: ${text.usuario.nome}</p>
-                    <p class="card-text">
-                      ${text.descricao}
-                    </p>
-                    <a href="show_text.html" class="card-link" content-id="${text.id}" type="text">Ler</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-    `;
-    return card;
-  }
-
   function cardImage(image) {
-    let card = `
-    <div class="col-xl-4 col-md-6 col-sm-12 content image">
-              <div class="card">
-                <div class="card-content">
-                  <div class="card-body">
-                    <h4 class="card-title mb-0">${image.titulo}</h4>
-                  </div>
-                  <img
+    $("#title")[0].innerHTML = `${image.titulo}`;
+    $("#image")[0].innerHTML = `<img
                       class="img-fluid w-100"
                       src="${image.uri}"
                       alt="Card image cap"
-                    />
-                  <div class="card-body">
-                    <p>Criado por: ${image.usuario.nome}</p>
-                    <p class="card-text">
-                      ${image.descricao}
-                    </p>
-                    <a href="show_image.html" class="card-link" content-id="${image.id}" type="image">Ver</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-    `;
-    return card;
-  }
-  $("#btn-all").click(function () {
-    $(".content").each(function (index) {
-      this.classList.remove("d-none");
-    });
-  });
-
-  $("#btn-text").click(function () {
-    $(".content").each(function (index) {
-      if (!this.classList.contains("text")) {
-        this.classList.add("d-none");
-      } else {
-        this.classList.remove("d-none");
-      }
-    });
-  });
-
-  $("#btn-video").click(function () {
-    $(".content").each(function (index) {
-      if (!this.classList.contains("video")) {
-        this.classList.add("d-none");
-      } else {
-        this.classList.remove("d-none");
-      }
-    });
-  });
-
-  $("#btn-image").click(function () {
-    $(".content").each(function (index) {
-      if (!this.classList.contains("image")) {
-        this.classList.add("d-none");
-      } else {
-        this.classList.remove("d-none");
-      }
-    });
-  });
-
-  function addEventButtonsLinks() {
-    $(".card-link").click(function (event) {
-      event.preventDefault();
-      console.log(event.currentTarget.getAttribute("href"));
-      window.localStorage.setItem(
-        `${event.currentTarget.getAttribute("type")}_show_content_id`,
-        event.currentTarget.getAttribute("content-id")
-      );
-      window.location.assign(event.currentTarget.getAttribute("href"));
-    });
+                    />`;
+    // $("#user")[0].innerHTML = `Criado por: ${text.usuario.nome}`;
+    $("#description")[0].innerHTML = `${image.descricao}`;
   }
 </script>
